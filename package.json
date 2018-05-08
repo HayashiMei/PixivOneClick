@@ -1,0 +1,22 @@
+{
+  "name": "pixiv-downloader",
+  "version": "1.0.0",
+  "description": "Just a simple extension for Pixiv.",
+  "main": "index.js",
+  "scripts": {
+    "build": "gulp"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "gulp": "^3.9.1",
+    "gulp-ruby-sass": "^3.0.0",
+    "vinyl-named": "^1.1.0",
+    "webpack": "^4.8.1",
+    "webpack-stream": "^4.0.3"
+  }
+}

@@ -1,2 +1,15 @@
-# PixivOneClick
-Just a simple Chrome extension for Pixiv.
+# Pixiv One Click
+
+Just a simple extension for Pixiv.
+
+## Install
+
+```
+$ npm install
+```
+
+## Build
+
+```
+$ npm run build
+```

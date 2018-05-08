@@ -5,6 +5,8 @@
 
 # production
 /.sass-cache
+dist/js/
+dist/css/
 
 # misc
 .DS_Store

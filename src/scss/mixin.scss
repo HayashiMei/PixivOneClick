@@ -1,0 +1,37 @@
+@mixin flex-flow($flex-flow...) {
+    -webkit-flex-flow: $flex-flow;
+    -ms-flex-flow: $flex-flow;
+    flex-flow: $flex-flow;
+}
+
+@mixin box-direction($direction...) {
+    -webkit-box-direction: $direction;
+    -moz-box-direction: $direction;
+    -o-box-direction: $direction;
+}
+
+@mixin box-orient($box-orient...) {
+    -webkit-box-orient: $box-orient;
+    -moz-box-orient: $box-orient;
+    -o-box-orient: $box-orient;
+}
+
+@mixin box-line($box-line...) {
+    -webkit-box-line: $box-line;
+    -moz-box-line: $box-line;
+    -o-box-line: $box-line;
+}
+
+@mixin transition($transition...) {
+    -webkit-transition: $transition;
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    -ms-transition: $transition;
+    transition: $transition;
+}
+
+@mixin opacity {
+    opacity: 0.9;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+    filter: alpha(opacity=90);
+}

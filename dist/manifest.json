@@ -1,0 +1,23 @@
+{
+  "name": "Pixiv One Click",
+  "version": "1.0",
+  "description": "Just a simple extension.",
+  "permissions": [
+    "*://*.pixiv.net/",
+    "*://*.pximg.net/"
+  ],
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
+  },
+  "page_action": {
+    "default_popup": "html/popup.html"
+  },
+  "manifest_version": 2,
+  "content_scripts": [{
+    "matches": ["*://*.pixiv.net/*"],
+    "css": ["css/content.css"],
+    "js": ["js/content.js"]
+  }],
+  "web_accessible_resources": ["image/download.png"]
+}
