@@ -8,7 +8,13 @@ module.exports = {
       loader: "babel-loader",
       exclude: path.resolve(__dirname, "./node_modules"),
       options: {
-        'presets': ['env']
+        presets: [
+          ['env', {
+            targets: {
+              chrome: 60
+            }
+          }]
+        ]
       }
     }]
   },

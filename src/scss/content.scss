@@ -2,7 +2,8 @@
 
 .ext-menu {
     position: absolute;
-    bottom: 4px;
+    top: 127px;
+    right: calc(((((100% - 150px) / 2) + 4px) + 40px) + 8px);
     z-index: 2;
     display: -webkit-box;
     display: -moz-box;
