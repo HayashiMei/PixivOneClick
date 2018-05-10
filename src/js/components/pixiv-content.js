@@ -120,11 +120,11 @@ export default class PixivContent {
 
   addDownloader2ImageItem() {
     document.querySelectorAll('.image-item').forEach((item, index) => {
-      const downloader = this.createDownloader();
-
       var a = item.querySelector('.work');
 
-      if (!a) return false;
+      if (!a || a.href.indexOf('booth') !== -1) return false;
+
+      const downloader = this.createDownloader();
 
       a.appendChild(downloader);
 
@@ -134,6 +134,8 @@ export default class PixivContent {
       this.worksMap[work.workId] = work;
 
       const listener = async e => {
+        if (!e.target.classList.contains('downloader')) return false;
+
         e.preventDefault();
 
         a.removeEventListener('click', listener);
@@ -163,6 +165,8 @@ export default class PixivContent {
       this.worksMap[work.workId] = work;
 
       const listener = async e => {
+        if (!e.target.classList.contains('downloader')) return false;
+
         e.preventDefault();
 
         a.removeEventListener('click', listener);
