@@ -21,3 +21,17 @@ gulp.task('webpack', () => {
     .pipe(webpackStream(webpackConfig, webpack))
     .pipe(gulp.dest('./dist/js/'));
 });
+
+gulp.task('sass:watch', () => {
+  gulp.watch('src/scss/*.scss', ['sass']).on('change', function (event) {
+      console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+  });
+});
+
+gulp.task('js:watch', () => {
+  gulp.watch('src/js/*/*.js', ['webpack']).on('change', function (event) {
+      console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+  });
+});
+
+gulp.task('watch', ['js:watch', 'sass:watch']);

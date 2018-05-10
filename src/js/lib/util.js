@@ -38,4 +38,34 @@ export default class Util {
       }
     });
   }
+
+  convert(options) {
+    const blobUrl = URL.createObjectURL(options.blob);
+
+    return new Promise((resolve, reject) => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const img = document.createElement("img");
+
+        img.setAttribute("src", blobUrl);
+
+        img.addEventListener("load", () => {
+            URL.revokeObjectURL(blobUrl);
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            ctx.clearRect(0, 0, img.width, img.height);
+            ctx.drawImage(img, 0, 0);
+
+            canvas.toBlob(blob => resolve(blob), options.type, options.quality);
+        });
+
+        img.addEventListener("error", err => {
+            URL.revokeObjectURL(blobUrl);
+
+            reject(err);
+        });
+    });
+}
 }

@@ -2,8 +2,7 @@
 
 .ext-menu {
     position: absolute;
-    top: 127px;
-    right: calc(((((100% - 150px) / 2) + 4px) + 40px) + 8px);
+    bottom: 4px;
     z-index: 2;
     display: -webkit-box;
     display: -moz-box;
@@ -16,6 +15,14 @@
     @include box-orient(horizontal);
     @include box-line(single);
     @include flex-flow(row-reverse nowrap);
+}
+
+.image-item .ext-menu {
+    right: calc(((((100% - 150px) / 2) + 4px) + 40px) + 8px);
+}
+
+.ranking-item .ext-menu {
+    right: calc(((((100% - 240px) / 2) + 4px) + 40px) + 8px);
 }
 
 .ext-menu-downloader {
