@@ -18,15 +18,19 @@
 }
 
 .image-item .ext-menu {
-    right: calc(((((100% - 150px) / 2) + 4px) + 40px) + 8px);
+    right: calc(((100% - 150px) / 2) + 52px);
 }
 
 .ranking-item .ext-menu {
-    right: calc(((((100% - 240px) / 2) + 4px) + 40px) + 8px);
+    right: calc(((100% - 240px) / 2) + 52px);
 }
 
 ._novel-item .ext-menu {
     right: 52px;
+}
+
+.rank-detail .ext-menu {
+    right: calc((100% - 100px) / 2 + 52px);
 }
 
 .ext-menu-downloader {
