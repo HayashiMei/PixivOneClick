@@ -4,8 +4,9 @@ import Webp from '../lib/webp'
 import Apng from '../lib/apng'
 
 class Work {
-  constructor(work) {
+  constructor(work, page) {
     this.workElment = work;
+    this.page = page;
     this.type = '';
     this.userId = '';
     this.userName = '';
@@ -36,11 +37,39 @@ class Work {
   }
 
   setWorkInfo() {
+    switch (this.page) {
+      case 'ranking_novel':
+      case 'user_novel':
+        this.getInfoFromNovelItem();
+        break;
+
+      case 'home':
+      case 'user_home':
+      case 'user_illust':
+      case 'ranking_illust':
+        this.getInfoFromImageItem();
+        break;
+
+      default:
+        break;
+    }
+    
+  }
+
+  getInfoFromImageItem() {
     const titleElement = this.workElment.querySelector('.title');
     this.workName = titleElement.textContent;
 
     const workURL = new URL(titleElement.parentElement.href || titleElement.href);
     this.workId = workURL.searchParams.get('illust_id') || workURL.searchParams.get('id');
+  }
+
+  getInfoFromNovelItem() {
+    const titleElement = this.workElment.querySelector('.title a');
+    this.workName = titleElement.textContent;
+
+    const workURL = new URL(titleElement.href);
+    this.workId = workURL.searchParams.get('id');
   }
 
   setUserInfo() {
@@ -75,11 +104,11 @@ export default class PixivContent {
         break;
 
       case '/ranking.php':
-        page = 'ranking';
+        page = 'ranking_illust';
         break;
 
       case '/novel/ranking.php':
-        page = 'novel_ranking';
+        page = 'ranking_novel';
         break;
 
       case '/member.php':
@@ -90,6 +119,7 @@ export default class PixivContent {
         page = 'user_illust';
         break;
 
+      case '/series.php':
       case '/novel/member.php':
         page = 'user_novel';
         break;
@@ -105,12 +135,17 @@ export default class PixivContent {
     switch (this.page) {
       case 'home':
       case 'user_home':
-      case 'user_illust':
+      case 'ranking_illust':
         this.addDownloader2ImageItem();
         break;
 
-      case 'ranking':
-        this.addDownloader2RankingItem();
+      case 'ranking_illust':
+        this.addDownloader2RankingIllust();
+        break;
+
+      case 'user_novel':
+      case 'ranking_novel':
+        this.addDownloader2NovelItem();
         break;
 
       default:
@@ -121,62 +156,75 @@ export default class PixivContent {
   addDownloader2ImageItem() {
     document.querySelectorAll('.image-item').forEach((item, index) => {
       var a = item.querySelector('.work');
-
       if (!a || a.href.indexOf('booth') !== -1) return false;
 
       const downloader = this.createDownloader();
-
       a.appendChild(downloader);
 
-      const work = new Work(item);
+      const work = new Work(item, this.page);
       work.init();
-
       this.worksMap[work.workId] = work;
 
       const listener = async e => {
-        if (!e.target.classList.contains('downloader')) return false;
-
         e.preventDefault();
 
-        a.removeEventListener('click', listener);
+        downloader.removeEventListener('click', listener);
 
         await this.downloadWork(work);
 
-        a.addEventListener('click', listener);
+        downloader.addEventListener('click', listener);
       };
 
-      a.addEventListener('click', listener);
+      downloader.addEventListener('click', listener);
     })
   }
 
-  addDownloader2RankingItem() {
+  addDownloader2RankingIllust() {
     document.querySelectorAll('.ranking-item').forEach((item, index) => {
-      const downloader = this.createDownloader();
-
       var a = item.querySelector('.work');
-
       if (!a) return false;
 
+      const downloader = this.createDownloader();
       a.appendChild(downloader);
 
-      const work = new Work(item);
+      const work = new Work(item, this.page);
       work.init();
-
       this.worksMap[work.workId] = work;
 
       const listener = async e => {
-        if (!e.target.classList.contains('downloader')) return false;
-
         e.preventDefault();
 
-        a.removeEventListener('click', listener);
+        downloader.removeEventListener('click', listener);
 
         await this.downloadWork(work);
 
-        a.addEventListener('click', listener);
+        downloader.addEventListener('click', listener);
       };
 
-      a.addEventListener('click', listener);
+      downloader.addEventListener('click', listener);
+    })
+  }
+
+  addDownloader2NovelItem() {
+    document.querySelectorAll('._novel-item').forEach((item, index) => {
+      const downloader = this.createDownloader();
+      item.appendChild(downloader);
+
+      const work = new Work(item, this.page);
+      work.init();
+      this.worksMap[work.workId] = work;
+
+      const listener = async e => {
+        e.preventDefault();
+
+        downloader.removeEventListener('click', listener);
+
+        await this.downloadWork(work);
+
+        downloader.addEventListener('click', listener);
+      };
+
+      downloader.addEventListener('click', listener);
     })
   }
 
@@ -438,7 +486,11 @@ export default class PixivContent {
   }
 
   async downloadNovel(work) {
-    const novelPageURL = work.workElment.querySelector('.work').href;
+    const novelPageURLElement = work.workElment.querySelector('.work') || work.workElment.querySelector('.title a')
+    
+    if (!novelPageURLElement) return false;
+    
+    const novelPageURL = novelPageURLElement.href;
 
     if (!novelPageURL) return false
 

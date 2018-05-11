@@ -25,6 +25,10 @@
     right: calc(((((100% - 240px) / 2) + 4px) + 40px) + 8px);
 }
 
+._novel-item .ext-menu {
+    right: 52px;
+}
+
 .ext-menu-downloader {
     position: relative;
     cursor: pointer;
