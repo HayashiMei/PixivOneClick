@@ -188,7 +188,6 @@ export default class PixivContent {
 
       case 'user_home':
       case 'user_illust':
-      case 'ranking_illust':
       case 'bookmark_illust':
         this.addDownloader2ImageItem();
         break;
