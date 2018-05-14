@@ -8,7 +8,7 @@ const webpackConfig = require("./webpack.config.js");
 gulp.task('default', ['sass', 'webpack']);
 
 gulp.task('sass', () => {
-  return sass('src/scss/content.scss', {
+  return sass('src/scss/*.scss', {
       style: 'expanded'
     })
     .on('error', sass.logError)

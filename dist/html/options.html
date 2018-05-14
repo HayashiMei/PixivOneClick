@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Pixiv One Click Options</title>
+  <link rel="stylesheet" href="../css/options.css">
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="options">
+
+      <div class="options-title">
+        <nav class="options-navi">
+          <h2>修改设置</h2>
+        </nav>
+      </div>
+
+      <div class="options-body">
+        <div class="options-content">
+
+          <table class="options-table">
+            <tbody>
+              <tr>
+                <td width="185">
+                  <span>Single illust path</span>
+                </td>
+                <td width="500" colspan="2">
+                  <input type="text" id="singlePath" class="save-path" />
+                </td>
+              </tr>
+              <tr>
+                <td width="185">
+                  <span>Multiple illust path</span>
+                </td>
+                <td width="500" colspan="2">
+                  <input type="text" id="multiPath" class="save-path" />
+                </td>
+              </tr>
+              <tr>
+                <td width="185">
+                  <span>Novel path</span>
+                </td>
+                <td width="500" colspan="2">
+                  <input type="text" id="novelPath" class="save-path" />
+                </td>
+              </tr>
+              <tr>
+                <td width="185">
+                  <span>Ugoira format</span>
+                </td>
+                <td width="500" colspan="2">
+                  <select id="ugoiraFormat">
+                    <option value="zip">ZIP</option>
+                    <option value="apng">APNG</option>
+                    <option value="webp">WEBP</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../js/options.js"></script>
+</body>
+
+</html>

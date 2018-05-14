@@ -1,0 +1,64 @@
+@import "_mixin.scss";
+h2 {
+    margin: 0;
+}
+
+body {
+    background: url(chrome-extension://__MSG_@@extension_id__/image/background.jpg) repeat;
+}
+
+#wrapper {
+    margin: 10px auto 0;
+    width: 970px;
+}
+
+#options {
+    width: 970px;
+}
+
+.options-title {
+    background: #fff;
+    @include border-radius(5px 5px 0px 0px / 5px 5px 0px 0px);
+    border-top: 1px solid #d6dee5;
+    border-left: 1px solid #d6dee5;
+    border-right: 1px solid #d6dee5;
+    padding: 10px 0px 0 0px;
+    width: 968px;
+}
+
+.options-navi {
+    border-bottom: 1px solid #d6dee5;
+    padding: 0px 20px 0px 20px;
+    text-align: center;
+}
+
+.options-body {
+    background: #ffffff;
+    border-left: 1px solid #d6dee5;
+    border-right: 1px solid #d6dee5;
+    width: 968px;
+}
+
+.options-content {
+    margin: 0 auto;
+    padding: 30px 0;
+    width: 665px;
+}
+
+.options-table {
+    width: 700px;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.options-table td {
+    padding: 8px;
+    vertical-align: top;
+    text-align: left;
+    font-weight: normal;
+    line-height: 20px;
+}
+
+.save-path {
+    width: 390px;
+}

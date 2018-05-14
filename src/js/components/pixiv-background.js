@@ -1,5 +1,14 @@
+import Option from './pixiv-options'
+
 export default class PixivBackground {
   init() {
+    this.option = new Option();
+    this.option.init();
+
+    this.addListener();
+  }
+
+  addListener() {
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       this.download(message.data).then(data => {
         sendResponse({
