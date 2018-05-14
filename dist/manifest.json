@@ -21,5 +21,5 @@
     "js": ["js/content.js"],
     "run_at": "document_start"
   }],
-  "web_accessible_resources": ["image/download.png"]
+  "web_accessible_resources": ["image/download.svg"]
 }
