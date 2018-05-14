@@ -255,12 +255,25 @@ export default class PixivContent {
       }
     });
 
-    if (['ugoira', 'illust', 'novel'].indexOf(work.type) !== -1) {
-      return `${path}.${this.getExt(options)}`;
-    } else if (work.type === 'multi') {
-      const index = String(options.index).padStart(3, '0');
-      return `${path}/${index}.${this.getExt(options)}`
+    let fileName = '';
+
+    switch (work.type) {
+      case 'illust':
+      case 'ugoira':
+      case 'novel':
+        fileName = `${path}.${this.getExt(options)}`;
+        break;
+    
+      case 'multi':
+        const index = String(options.index).padStart(3, '0');
+        fileName = `${path}/${index}.${this.getExt(options)}`;
+        break;
+
+      default:
+        break;
     }
+
+    return fileName;
   }
 
   getPath(options) {
@@ -523,6 +536,29 @@ export default class PixivContent {
       filename: await this.getFileName({ work, pattern: options.novelPath, ext: textBlob.type }),
       conflictAction: 'uniquify'
     });
+
+    const coverURL = new URL(work.workURL);
+    coverURL.searchParams.set('mode', 'cover');
+
+    if (Number(options.novelCover) === 1) {
+      const coverPageDocument = await this.getPageDocumentByURL(coverURL);
+      const originalCoverURL = coverPageDocument.querySelector('img').src;
+
+      const imageBlob = await this.util.fetch({
+        url: originalCoverURL,
+        type: "blob",
+        init: {
+          credentials: "include",
+          referrer: location.href
+        }
+      })
+
+      await this.download({
+        blob: imageBlob,
+        filename: await this.getFileName({ work, pattern: options.novelPath, ext: imageBlob.type }),
+        conflictAction: 'uniquify'
+      })
+    }
   }
 
   async getPageDocumentByURL(url) {
