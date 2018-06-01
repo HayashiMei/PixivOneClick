@@ -1,15 +1,15 @@
 {
-  "name": "pixiv-downloader",
+  "name": "pixiv-one-click",
   "version": "1.0.0",
   "description": "Just a simple extension for Pixiv.",
+  "author": "HayashiMei",
+  "keywords": ["pixiv", "chrome extension"],
   "main": "index.js",
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
