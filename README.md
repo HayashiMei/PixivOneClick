@@ -6,7 +6,7 @@
 
 ## Screenshot
 
-以截图截自[荻pote](https://www.pixiv.net/member.php?id=2131660)和[小说每日排行榜](https://www.pixiv.net/novel/ranking.php?mode=daily)。
+以下截图截自[荻pote](https://www.pixiv.net/member.php?id=2131660)和[小说每日排行榜](https://www.pixiv.net/novel/ranking.php?mode=daily)。
 
 ### Illust
 
