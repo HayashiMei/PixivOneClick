@@ -31,4 +31,4 @@ $ npm run build
 
 ## Install
 
-在Chrome的[扩展程序页面](chrome://extensions/)通过 **加载已解压的扩展程序** 安装这个扩展。
+在Chrome的 [扩展程序页面](chrome://extensions) 通过 **加载已解压的扩展程序** 安装这个扩展。
