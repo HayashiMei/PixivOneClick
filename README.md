@@ -32,3 +32,7 @@ $ npm run build
 ## Install
 
 在Chrome的 **扩展程序页面(chrome://extensions)** 通过 **加载已解压的扩展程序** 安装这个扩展。
+
+## Attention
+
+这个扩展只是在好奇心的驱使下做着玩的，参考了很多Chrome商店里现有的Pixiv扩展，功能非常简陋(・ω<) てへぺろ
