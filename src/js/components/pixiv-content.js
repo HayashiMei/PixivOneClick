@@ -319,7 +319,22 @@ export default class PixivContent {
 
   async downloadIllust(work) {
     const illustPageDocument = await this.getPageDocumentByURL(work.workURL);
-    const originalIllustURL = illustPageDocument.querySelector('._illust_modal img').dataset['src'];
+
+    let originalIllustURL = '';
+    for (const script of illustPageDocument.querySelectorAll('script')) {
+
+      const matchedResult = script.textContent.match(new RegExp('"urls"[ //t]*:[ //t]*(.*?),"tags"'));
+
+      if (!matchedResult) continue;
+
+      const urls = JSON.parse(matchedResult[1]);
+
+      if (!urls['original']) return;
+
+      originalIllustURL = urls['original'];
+
+      break;
+    }
 
     const imageBlob = await this.util.fetch({
       url: originalIllustURL,
@@ -381,15 +396,15 @@ export default class PixivContent {
   }
 
   async downloadUgoira(work) {
-    const illustPageDocument = await this.getPageDocumentByURL(work.workURL);
+    const ugoiraData = await this.util.fetch({
+      url: `https://www.pixiv.net/ajax/illust/${work.workId}/ugoira_meta`,
+      type: "json",
+      init: { credentials: "include", referrer: location.href }
+    });
 
-    for (const script of illustPageDocument.querySelectorAll('script')) {
-      const matchedResult = script.textContent.match(new RegExp('pixiv.context.ugokuIllustFullscreenData[ //t]*=[ //t]*(.*?);'));
+    if (!ugoiraData && !ugoiraData.body) return;
 
-      if (!matchedResult) continue;
-
-      work.ugoiraData = JSON.parse(matchedResult[1]);
-    }
+    work.ugoiraData = ugoiraData.body;
 
     const options = await this.option.get();
 
