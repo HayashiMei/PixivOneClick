@@ -1,7 +1,8 @@
 {
     "singlePath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
     "multiPath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
-    "novelPath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
+    "ugoiraPath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
     "ugoiraFormat": "zip",
+    "novelPath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
     "novelCover": "1"
 }

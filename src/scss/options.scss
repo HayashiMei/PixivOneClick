@@ -1,64 +1,100 @@
+@import "_reset.scss";
 @import "_mixin.scss";
-h2 {
-    margin: 0;
-}
-
+@import "_form.scss";
 body {
     background: url(chrome-extension://__MSG_@@extension_id__/image/background.jpg) repeat;
 }
 
-#wrapper {
-    margin: 10px auto 0;
-    width: 970px;
-}
-
-#options {
-    width: 970px;
-}
-
-.options-title {
+#app {
     background: #fff;
-    @include border-radius(5px 5px 0px 0px / 5px 5px 0px 0px);
-    border-top: 1px solid #d6dee5;
-    border-left: 1px solid #d6dee5;
-    border-right: 1px solid #d6dee5;
-    padding: 10px 0px 0 0px;
-    width: 968px;
+    @include border-radius(4px);
+    border: 1px solid #eee;
 }
 
-.options-navi {
-    border-bottom: 1px solid #d6dee5;
+.navigation {
     padding: 0px 20px 0px 20px;
+    border-bottom: 1px solid #d6dee5;
     text-align: center;
+    position: relative;
 }
 
-.options-body {
-    background: #ffffff;
-    border-left: 1px solid #d6dee5;
-    border-right: 1px solid #d6dee5;
-    width: 968px;
-}
-
-.options-content {
-    margin: 0 auto;
-    padding: 30px 0;
-    width: 665px;
-}
-
-.options-table {
-    width: 700px;
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-.options-table td {
-    padding: 8px;
+.navigation-item {
+    display: inline-block;
+    margin: 0 15px 0 15px;
+    font-size: 14px;
+    line-height: 50px;
     vertical-align: top;
-    text-align: left;
-    font-weight: normal;
-    line-height: 20px;
+    color: #00a1d6;
+    cursor: pointer;
 }
 
-.save-path {
-    width: 390px;
+.navigation-cursor,
+.navigation-cursor:after {
+    position: absolute;
+    bottom: 0;
+    height: 0;
+    width: 0;
+}
+
+.navigation-cursor {
+    left: 0;
+    border-bottom: 1px solid #00a1d6;
+    transform: translateX(0);
+    transition: width .2s ease, transform .2s ease;
+}
+
+.navigation-cursor:after {
+    content: "";
+    left: 50%;
+    transform: translateX(-50%);
+    border: 3px solid #00a1d6;
+    border-top: 0;
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+
+.content {
+    display: flex;
+    padding: 30px 0;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section {
+    width: 65%;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 17px;
+    position: relative;
+    color: #6d757a;
+}
+
+.section-title {
+    padding: 0 0 15px;
+    position: relative;
+}
+
+.section-title__icon {
+    float: left;
+    width: 4px;
+    height: 23px;
+    margin-top: 6px;
+    background-color: #00a1d6;
+    border-radius: 4px;
+}
+
+.section-title__text {
+    float: left;
+    margin-left: 8px;
+    color: #222;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 33px;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }

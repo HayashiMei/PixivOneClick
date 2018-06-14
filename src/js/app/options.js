@@ -14,4 +14,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       option.set({ [key]: e.currentTarget.value });
     });
   }
+
+  const updateCursor = () => {
+    const cursor = document.querySelector('.navigation-cursor'),
+          activedItem = document.querySelector('.navigation-item');
+
+    if (!cursor || !activedItem) return ;
+
+    cursor.style.cssText = `width: ${activedItem.offsetWidth}px; transform: translateX(${activedItem.offsetLeft}px);`;
+  }
+
+  window.addEventListener('resize', updateCursor);
+  updateCursor();
 });
