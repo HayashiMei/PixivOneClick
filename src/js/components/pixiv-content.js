@@ -461,10 +461,12 @@ export default class PixivContent {
       const imageArrayBuffer = await zipObject.file(frame.file).async("arraybuffer");
       const imageBlob = new Blob([imageArrayBuffer], { "type": ugoiraData.mime_type });
 
+      const options = await this.option.get();
+
       const convertedImageBlob = await this.util.convert({
           blob: imageBlob,
           type: "image/png",
-          quality: 1
+          quality: options.ugoiraQuality
       });
 
       convertedImageBlobs.push(convertedImageBlob);
@@ -479,8 +481,6 @@ export default class PixivContent {
     }
 
     const imageBlob = await apng.render();
-
-    const options = await this.option.get();
 
     await this.download({
       blob: imageBlob,
@@ -508,10 +508,12 @@ export default class PixivContent {
       const imageArrayBuffer = await zipObject.file(frame.file).async("arraybuffer");
       const imageBlob = new Blob([imageArrayBuffer], { "type": ugoiraData.mime_type });
 
+      const options = await this.option.get();
+
       const convertedImageBlob = await this.util.convert({
           blob: imageBlob,
           type: "image/webp",
-          quality: 1
+          quality: options.ugoiraQuality
       });
 
       convertedImageBlobs.push(convertedImageBlob);
@@ -526,8 +528,6 @@ export default class PixivContent {
     }
 
     const imageBlob = await webp.render();
-
-    const options = await this.option.get();
 
     await this.download({
       blob: imageBlob,
