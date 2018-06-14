@@ -437,7 +437,7 @@ export default class PixivContent {
 
     await this.download({
       blob: zipBlob,
-      filename: await this.getFileName({ work, pattern: options.multiPath, ext: zipBlob.type }),
+      filename: await this.getFileName({ work, pattern: options.ugoiraPath, ext: zipBlob.type }),
       conflictAction: 'uniquify'
     });
   }
@@ -484,7 +484,7 @@ export default class PixivContent {
 
     await this.download({
       blob: imageBlob,
-      filename: await this.getFileName({ work, pattern: options.multiPath, ext: imageBlob.type }),
+      filename: await this.getFileName({ work, pattern: options.ugoiraPath, ext: imageBlob.type }),
       conflictAction: 'uniquify'
     });
   }
@@ -531,7 +531,7 @@ export default class PixivContent {
 
     await this.download({
       blob: imageBlob,
-      filename: await this.getFileName({ work, pattern: options.multiPath, ext: imageBlob.type }),
+      filename: await this.getFileName({ work, pattern: options.ugoiraPath, ext: imageBlob.type }),
       conflictAction: 'uniquify'
     });
   }
