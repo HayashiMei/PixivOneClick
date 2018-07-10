@@ -272,7 +272,6 @@ export default class PixivContent {
       default:
         break;
     }
-
     return fileName;
   }
 
@@ -288,7 +287,8 @@ export default class PixivContent {
   async getWorkName(work) {
     if (/\.{3}$/.test(work.workName)) {
       const workPageDocument = await this.getPageDocumentByURL(work.workURL);
-      work.workName = workPageDocument.querySelector('.work-info .title').textContent;
+      const matchedResult = workPageDocument.title.match(new RegExp('「(.*)」/'))
+      work.workName = matchedResult[1];
     }
     return work.workName.replace(/[\/\\\:\：\*\?\"\<\>\|]/, '_');
   }

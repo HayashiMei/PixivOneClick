@@ -43,7 +43,6 @@ export default class PixivBackground {
         if (downloadId === void(0)) {
           reject(new Error("Couldn't download file"));
         }
-
         resolve(downloadId);
       });
     });
