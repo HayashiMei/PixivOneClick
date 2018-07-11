@@ -9,6 +9,7 @@ dist/js/
 dist/css/
 *.crx
 *.pem
+*.zip
 
 # misc
 .DS_Store
