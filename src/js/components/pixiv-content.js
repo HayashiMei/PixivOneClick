@@ -12,18 +12,17 @@ export default class PixivContent {
     this.util = new Util();
     this.option = new Option();
     this.worksMap = {};
-    this.page = this.getPage();
 
-    setInterval(() => {
-      this.page = this.getPage();
-      this.init();
-    }, 500)
+    const { page, spa } = this.getPage();
+    this.page = page;
+    this.spa = spa;
   }
 
   getPage() {
     const url = new URL(location.href);
 
     let page = '';
+    let spa = false;
     switch (url.pathname) {
       case '/':
         page = 'home';
@@ -39,14 +38,17 @@ export default class PixivContent {
 
       case '/member.php':
         page = 'user_home';
+        spa = true;
         break;
 
       case '/member_illust.php':
         page = 'user_illust';
+        spa = true;
         break;
 
       case '/bookmark.php':
         page = 'bookmark_illust';
+        spa = true;
         break;
 
       case '/new_illust.php':
@@ -70,10 +72,30 @@ export default class PixivContent {
         break;
     }
 
-    return page;
+    return {
+      page,
+      spa,
+    };
   }
 
   init() {
+    if (this.spa) {
+      return this.initNew();
+    } else {
+      return this.initOld();
+    }
+  }
+
+  initNew() {
+    setInterval(() => {
+      const { page, spa } = this.getPage();
+      this.page = page;
+      this.spa = spa;
+      this.initOld();
+    }, 500)
+  }
+
+  initOld() {
     switch (this.page) {
       case 'home':
         this.addDownloader2ImageItem();
