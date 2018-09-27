@@ -1,9 +1,11 @@
-import Util from '../lib/util'
-import Option from './pixiv-options'
-import Work from './pixiv-work'
-import JSZip from 'jszip'
-import Webp from '../lib/webp'
-import Apng from '../lib/apng'
+import $ from "jquery";
+import Util from '../lib/util';
+import Option from './pixiv-options';
+import Work from './pixiv-work';
+import WorkNew from './pixiv-work-new';
+import JSZip from 'jszip';
+import Webp from '../lib/webp';
+import Apng from '../lib/apng';
 
 export default class PixivContent {
   constructor() {
@@ -11,6 +13,11 @@ export default class PixivContent {
     this.option = new Option();
     this.worksMap = {};
     this.page = this.getPage();
+
+    setInterval(() => {
+      this.page = this.getPage();
+      this.init();
+    }, 500)
   }
 
   getPage() {
@@ -77,7 +84,7 @@ export default class PixivContent {
       case 'user_illust':
       case 'bookmark_illust':
       case 'new_illust':
-        this.addDownloader2ImageItem();
+        this.addDownloader2UserImageItem();
         break;
 
       case 'ranking_illust':
@@ -107,7 +114,7 @@ export default class PixivContent {
   }
 
   addDownloader2ImageItem() {
-    document.querySelectorAll('.image-item').forEach((item, index) => {
+    document.querySelectorAll('.image-item').forEach(item => {
       var a = item.querySelector('.work');
       if (!a || a.href.indexOf('booth') !== -1 || this.isLimited(item)) return false;
 
@@ -117,6 +124,35 @@ export default class PixivContent {
       const work = new Work(item, this.page);
       work.init();
       this.worksMap[work.workId] = work;
+
+      const listener = async e => {
+        e.preventDefault();
+
+        downloader.removeEventListener('click', listener);
+
+        await this.downloadWork(work);
+
+        downloader.addEventListener('click', listener);
+      };
+
+      downloader.addEventListener('click', listener);
+    })
+  }
+
+  addDownloader2UserImageItem() {
+    document.querySelectorAll('li button > svg[viewBox="0 0 32 32"]').forEach(item => {
+      const image = $(item).parents('li')[0].firstChild;
+
+      if (image.querySelector('.ext-menu')) {
+        return;
+      }
+
+      const work = new WorkNew(image, this.page);
+      work.init();
+      this.worksMap[work.workId] = work;
+
+      const downloader = this.createDownloader('new');
+      work.btnGroup.insertBefore(downloader, work.btnGroup.firstChild)
 
       const listener = async e => {
         e.preventDefault();
@@ -341,7 +377,8 @@ export default class PixivContent {
       type: "blob",
       init: {
         credentials: "include",
-        referrer: location.href
+        referrer: location.href,
+        origin,
       }
     })
 
@@ -357,9 +394,15 @@ export default class PixivContent {
   async downloadMultiple(work) {
     const pageCountSpan = work.workElment.querySelector('.page-count span');
 
-    if (!pageCountSpan) return false;
+    let pageCount = 0;
 
-    const pageCount = Number(pageCountSpan.textContent);
+    if (pageCountSpan) {
+      pageCount = Number(pageCountSpan.textContent);
+    } else if (work.pageCount) {
+      pageCount = work.pageCount;
+    } else {
+      return;
+    }
 
     const multiIllustPageURL = work.workURL.replace('medium', 'manga_big');
 
@@ -590,7 +633,7 @@ export default class PixivContent {
     return domParser.parseFromString(illustPageText, "text/html");
   }
 
-  createDownloader() {
+  createDownloader(className) {
     const icon = document.createElement('div');
     icon.classList.add('downloader');
 
@@ -601,6 +644,7 @@ export default class PixivContent {
     const downloader = document.createElement('a');
     downloader.appendChild(div);
     downloader.classList.add('ext-menu');
+    downloader.classList.add(className);
 
     return downloader;
   }

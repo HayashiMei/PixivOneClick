@@ -1,4 +1,6 @@
-export default class Work {
+import $ from 'jquery';
+
+export default class WorkNew {
   constructor(work, page) {
     this.workElment = work;
     this.page = page;
@@ -19,13 +21,17 @@ export default class Work {
   setType() {
     let type = '';
 
-    if (this.workElment.querySelector('.multiple')) {
-      type = 'multi';
-    } else if (this.workElment.querySelector('.ugoku-illust')) {
+    const ugoiraMark = $(this.workElment).find('svg[viewBox="0 0 24 24"]');
+    const multiMark = $(this.workElment).find('svg[viewBox="0 0 9 10"]');
+
+    if (ugoiraMark.length) {
       type = 'ugoira';
-    } else if (this.workElment.querySelector('[data-type=novel]')) {
+    } else if (multiMark.length) {
+      type = 'multi';
+      this.pageCount = multiMark[0].nextElementSibling.innerText;
+    } else if (~this.workElment.firstElementChild.href.indexOf('novel')) {
       type = 'novel';
-    } else if (this.workElment.querySelector('[data-type=illust]')) {
+    } else {
       type = 'illust';
     }
 
@@ -50,25 +56,22 @@ export default class Work {
         this.getWorkInfoFromImageItem();
         break;
 
-      case 'home_ranking':
-        this.getWorkInfoFromRankDetail();
-        break;
-
       default:
         break;
     }
   }
 
   getWorkInfoFromImageItem() {
-    const titleElement = this.workElment.querySelector('.title');
-    this.workName = titleElement.textContent;
+    const like = $(this.workElment).find('button');
+    this.btnLike = like[0];
+    this.btnGroup = like.parent().parent()[0];
 
-    this.workURL = titleElement.parentElement.href || titleElement.href;
+    const a = $(this.workElment).find('a[class!="ext-menu"]')[1];
+    this.workURL = a.href;
+    this.workName = a.innerText;
 
     const urlObject = new URL(this.workURL);
-    this.workId =
-      urlObject.searchParams.get('illust_id') ||
-      urlObject.searchParams.get('id');
+    this.workId = urlObject.searchParams.get('illust_id');
   }
 
   getWorkInfoFromNovelItem() {
@@ -93,8 +96,8 @@ export default class Work {
 
   setUserInfo() {
     switch (this.page) {
-      case 'home_ranking':
-        this.getUserInfoFromRankDetail();
+      case 'bookmark_illust':
+        this.getUserInfoFromBookmarkPage();
         break;
 
       default:
@@ -104,25 +107,19 @@ export default class Work {
   }
 
   getUserInfo() {
-    let userInfo =
-      this.workElment.querySelector('.user') ||
-      this.workElment.querySelector('.user-container');
-    if (userInfo) {
-      this.userName = userInfo.dataset['user_name'];
-      this.userId = userInfo.dataset['user_id'];
-    } else {
-      userInfo = document.querySelector('.profile .user-name');
-      this.userName = userInfo.title;
+    this.userName = document.title.match(/「(.*)」/)[1];
 
-      const userURL = new URL(userInfo.href);
-      this.userId = userURL.searchParams.get('id');
-    }
+    const urlObject = new URL(document.location);
+    this.userId = urlObject.searchParams.get('id');
   }
 
-  getUserInfoFromRankDetail() {
-    let userInfo = this.workElment.querySelector('.ui-profile-popup');
+  getUserInfoFromBookmarkPage() {
+    const a = $(this.workElment).find('a');
 
-    this.userName = userInfo.textContent;
-    this.userId = userInfo.dataset['user_id'];
+    const userInfo = a[a.length - 1];
+    this.userName = userInfo.innerText;
+
+    const urlObject = new URL(userInfo.href);
+    this.userId = urlObject.searchParams.get('id');
   }
 }

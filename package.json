@@ -1,9 +1,12 @@
 {
   "name": "pixiv-one-click",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Just a simple extension for Pixiv.",
   "author": "HayashiMei",
-  "keywords": ["pixiv", "chrome extension"],
+  "keywords": [
+    "pixiv",
+    "chrome extension"
+  ],
   "main": "index.js",
   "scripts": {
     "build": "gulp",
@@ -20,5 +23,8 @@
     "vinyl-named": "^1.1.0",
     "webpack": "^4.8.1",
     "webpack-stream": "^4.0.3"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
   }
 }

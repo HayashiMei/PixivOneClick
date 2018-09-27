@@ -40,7 +40,7 @@ export default class PixivBackground {
   browserDownload(options) {
     return new Promise((resolve, reject) => {
       chrome.downloads.download(options, downloadId => {
-        if (downloadId === void(0)) {
+        if (!downloadId) {
           reject(new Error("Couldn't download file"));
         }
         resolve(downloadId);
