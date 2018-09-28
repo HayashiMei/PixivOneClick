@@ -1,4 +1,4 @@
-import $ from "jquery";
+import $ from 'jquery';
 import Util from '../lib/util';
 import Option from './pixiv-options';
 import Work from './pixiv-work';
@@ -92,7 +92,7 @@ export default class PixivContent {
       this.page = page;
       this.spa = spa;
       this.initOld();
-    }, 500)
+    }, 500);
   }
 
   initOld() {
@@ -127,7 +127,7 @@ export default class PixivContent {
 
   isLimited(item) {
     const img = item.querySelector('img');
-    
+
     if (!img) return true;
 
     const imgURL = new URL(img.dataset['src']);
@@ -138,7 +138,9 @@ export default class PixivContent {
   addDownloader2ImageItem() {
     document.querySelectorAll('.image-item').forEach(item => {
       var a = item.querySelector('.work');
-      if (!a || a.href.indexOf('booth') !== -1 || this.isLimited(item)) return false;
+      if (!a || a.href.indexOf('booth') !== -1 || this.isLimited(item)) {
+        return false;
+      }
 
       const downloader = this.createDownloader();
       a.appendChild(downloader);
@@ -158,7 +160,7 @@ export default class PixivContent {
       };
 
       downloader.addEventListener('click', listener);
-    })
+    });
   }
 
   addDownloader2UserImageItem() {
@@ -174,7 +176,7 @@ export default class PixivContent {
       this.worksMap[work.workId] = work;
 
       const downloader = this.createDownloader('new');
-      work.btnGroup.insertBefore(downloader, work.btnGroup.firstChild)
+      work.btnGroup.insertBefore(downloader, work.btnGroup.firstChild);
 
       const listener = async e => {
         e.preventDefault();
@@ -187,11 +189,11 @@ export default class PixivContent {
       };
 
       downloader.addEventListener('click', listener);
-    })
+    });
   }
 
   addDownloader2RankingIllust() {
-    document.querySelectorAll('.ranking-item').forEach((item, index) => {
+    document.querySelectorAll('.ranking-item').forEach(item => {
       if (this.isLimited(item)) return false;
 
       var a = item.querySelector('.work');
@@ -215,11 +217,11 @@ export default class PixivContent {
       };
 
       downloader.addEventListener('click', listener);
-    })
+    });
   }
 
   addDownloader2NovelItem() {
-    document.querySelectorAll('._novel-item').forEach((item, index) => {
+    document.querySelectorAll('._novel-item').forEach(item => {
       const downloader = this.createDownloader();
       item.appendChild(downloader);
 
@@ -238,11 +240,11 @@ export default class PixivContent {
       };
 
       downloader.addEventListener('click', listener);
-    })
+    });
   }
 
   addDownloader2RankingDetail() {
-    document.querySelectorAll('.rank-detail').forEach((item, index) => {
+    document.querySelectorAll('.rank-detail').forEach(item => {
       var a = item.querySelector('._work');
 
       const downloader = this.createDownloader();
@@ -263,7 +265,7 @@ export default class PixivContent {
       };
 
       downloader.addEventListener('click', listener);
-    })
+    });
   }
 
   getExt(options) {
@@ -278,16 +280,16 @@ export default class PixivContent {
         ext = 'png';
         break;
 
-      case "application/zip":
-        ext = "zip";
+      case 'application/zip':
+        ext = 'zip';
         break;
 
-      case "image/webp":
-        ext = "webp";
+      case 'image/webp':
+        ext = 'webp';
         break;
 
-      case "text/plain":
-        ext = "txt";
+      case 'text/plain':
+        ext = 'txt';
         break;
 
       default:
@@ -298,7 +300,7 @@ export default class PixivContent {
   }
 
   async getFileName(options) {
-    const { work } = options
+    const { work } = options;
 
     const workName = await this.getWorkName(work);
     const userName = work.userName.replace(/[\/\\\:\：\*\?\"\<\>\|]/, '_');
@@ -309,8 +311,8 @@ export default class PixivContent {
         userId: work.userId,
         userName,
         workId: work.workId,
-        workName
-      }
+        workName,
+      },
     });
 
     let fileName = '';
@@ -321,7 +323,7 @@ export default class PixivContent {
       case 'novel':
         fileName = `${path}.${this.getExt(options)}`;
         break;
-    
+
       case 'multi':
         const index = String(options.index).padStart(3, '0');
         fileName = `${path}/${index}.${this.getExt(options)}`;
@@ -345,7 +347,7 @@ export default class PixivContent {
   async getWorkName(work) {
     if (/\.{3}$/.test(work.workName)) {
       const workPageDocument = await this.getPageDocumentByURL(work.workURL);
-      const matchedResult = workPageDocument.title.match(new RegExp('「(.*)」/'))
+      const matchedResult = workPageDocument.title.match(new RegExp('「(.*)」/'));
       work.workName = matchedResult[1];
     }
     return work.workName.replace(/[\/\\\:\：\*\?\"\<\>\|]/, '_');
@@ -380,7 +382,6 @@ export default class PixivContent {
 
     let originalIllustURL = '';
     for (const script of illustPageDocument.querySelectorAll('script')) {
-
       const matchedResult = script.textContent.match(new RegExp('"urls"[ //t]*:[ //t]*(.*?),"tags"'));
 
       if (!matchedResult) continue;
@@ -396,21 +397,25 @@ export default class PixivContent {
 
     const imageBlob = await this.util.fetch({
       url: originalIllustURL,
-      type: "blob",
+      type: 'blob',
       init: {
-        credentials: "include",
+        credentials: 'include',
         referrer: location.href,
         origin,
-      }
-    })
+      },
+    });
 
     const options = await this.option.get();
 
     await this.download({
       blob: imageBlob,
-      filename: await this.getFileName({ work, pattern: options.singlePath, ext: imageBlob.type }),
-      conflictAction: 'uniquify'
-    })
+      filename: await this.getFileName({
+        work,
+        pattern: options.singlePath,
+        ext: imageBlob.type,
+      }),
+      conflictAction: 'uniquify',
+    });
   }
 
   async downloadMultiple(work) {
@@ -442,9 +447,9 @@ export default class PixivContent {
     for (let i = 0; i < imageURLs.length; i++) {
       const imageBlob = await this.util.fetch({
         url: imageURLs[i],
-        type: "blob",
-        init: { credentials: "include", referrer: location.href }
-      })
+        type: 'blob',
+        init: { credentials: 'include', referrer: location.href },
+      });
 
       imageBlobs.push(imageBlob);
     }
@@ -454,17 +459,22 @@ export default class PixivContent {
     for (let i = 0; i < imageBlobs.length; i++) {
       await this.download({
         blob: imageBlobs[i],
-        filename: await this.getFileName({ work, pattern: options.multiPath, ext: imageBlobs[i].type, index: i }),
-        conflictAction: 'uniquify'
-      })
+        filename: await this.getFileName({
+          work,
+          pattern: options.multiPath,
+          ext: imageBlobs[i].type,
+          index: i,
+        }),
+        conflictAction: 'uniquify',
+      });
     }
   }
 
   async downloadUgoira(work) {
     const ugoiraData = await this.util.fetch({
       url: `https://www.pixiv.net/ajax/illust/${work.workId}/ugoira_meta`,
-      type: "json",
-      init: { credentials: "include", referrer: location.href }
+      type: 'json',
+      init: { credentials: 'include', referrer: location.href },
     });
 
     if (!ugoiraData && !ugoiraData.body) return;
@@ -494,16 +504,20 @@ export default class PixivContent {
   async downloadZip(work) {
     const zipBlob = await this.util.fetch({
       url: work.ugoiraData.src,
-      type: "blob",
-      init: { credentials: "include", referrer: location.href }
+      type: 'blob',
+      init: { credentials: 'include', referrer: location.href },
     });
 
     const options = await this.option.get();
 
     await this.download({
       blob: zipBlob,
-      filename: await this.getFileName({ work, pattern: options.ugoiraPath, ext: zipBlob.type }),
-      conflictAction: 'uniquify'
+      filename: await this.getFileName({
+        work,
+        pattern: options.ugoiraPath,
+        ext: zipBlob.type,
+      }),
+      conflictAction: 'uniquify',
     });
   }
 
@@ -512,8 +526,8 @@ export default class PixivContent {
 
     const zipArrayBuffer = await this.util.fetch({
       url: ugoiraData.src,
-      type: "arraybuffer",
-      init: { credentials: "include", referrer: location.href }
+      type: 'arraybuffer',
+      init: { credentials: 'include', referrer: location.href },
     });
 
     const zipObject = await JSZip.loadAsync(zipArrayBuffer);
@@ -523,15 +537,17 @@ export default class PixivContent {
     for (let i = 0; i < ugoiraData.frames.length; i++) {
       const frame = ugoiraData.frames[i];
 
-      const imageArrayBuffer = await zipObject.file(frame.file).async("arraybuffer");
-      const imageBlob = new Blob([imageArrayBuffer], { "type": ugoiraData.mime_type });
+      const imageArrayBuffer = await zipObject.file(frame.file).async('arraybuffer');
+      const imageBlob = new Blob([imageArrayBuffer], {
+        type: ugoiraData.mime_type,
+      });
 
       const options = await this.option.get();
 
       const convertedImageBlob = await this.util.convert({
-          blob: imageBlob,
-          type: "image/png",
-          quality: options.ugoiraQuality
+        blob: imageBlob,
+        type: 'image/png',
+        quality: options.ugoiraQuality,
       });
 
       convertedImageBlobs.push(convertedImageBlob);
@@ -549,8 +565,12 @@ export default class PixivContent {
 
     await this.download({
       blob: imageBlob,
-      filename: await this.getFileName({ work, pattern: options.ugoiraPath, ext: imageBlob.type }),
-      conflictAction: 'uniquify'
+      filename: await this.getFileName({
+        work,
+        pattern: options.ugoiraPath,
+        ext: imageBlob.type,
+      }),
+      conflictAction: 'uniquify',
     });
   }
 
@@ -559,8 +579,8 @@ export default class PixivContent {
 
     const zipArrayBuffer = await this.util.fetch({
       url: ugoiraData.src,
-      type: "arraybuffer",
-      init: { credentials: "include", referrer: location.href }
+      type: 'arraybuffer',
+      init: { credentials: 'include', referrer: location.href },
     });
 
     const zipObject = await JSZip.loadAsync(zipArrayBuffer);
@@ -570,15 +590,17 @@ export default class PixivContent {
     for (let i = 0; i < ugoiraData.frames.length; i++) {
       const frame = ugoiraData.frames[i];
 
-      const imageArrayBuffer = await zipObject.file(frame.file).async("arraybuffer");
-      const imageBlob = new Blob([imageArrayBuffer], { "type": ugoiraData.mime_type });
+      const imageArrayBuffer = await zipObject.file(frame.file).async('arraybuffer');
+      const imageBlob = new Blob([imageArrayBuffer], {
+        type: ugoiraData.mime_type,
+      });
 
       const options = await this.option.get();
 
       const convertedImageBlob = await this.util.convert({
-          blob: imageBlob,
-          type: "image/webp",
-          quality: options.ugoiraQuality
+        blob: imageBlob,
+        type: 'image/webp',
+        quality: options.ugoiraQuality,
       });
 
       convertedImageBlobs.push(convertedImageBlob);
@@ -596,25 +618,33 @@ export default class PixivContent {
 
     await this.download({
       blob: imageBlob,
-      filename: await this.getFileName({ work, pattern: options.ugoiraPath, ext: imageBlob.type }),
-      conflictAction: 'uniquify'
+      filename: await this.getFileName({
+        work,
+        pattern: options.ugoiraPath,
+        ext: imageBlob.type,
+      }),
+      conflictAction: 'uniquify',
     });
   }
 
   async downloadNovel(work) {
     const novelPageDocument = await this.getPageDocumentByURL(work.workURL);
-    const novelTextElement = novelPageDocument.querySelector('#novel_text')
+    const novelTextElement = novelPageDocument.querySelector('#novel_text');
 
     if (!novelTextElement) return false;
 
-    const textBlob = new Blob([novelTextElement.textContent.replace(/\r\n|\r|\n/g, "\r\n")], { type: "text/plain" });
+    const textBlob = new Blob([novelTextElement.textContent.replace(/\r\n|\r|\n/g, '\r\n')], { type: 'text/plain' });
 
     const options = await this.option.get();
 
     await this.download({
       blob: textBlob,
-      filename: await this.getFileName({ work, pattern: options.novelPath, ext: textBlob.type }),
-      conflictAction: 'uniquify'
+      filename: await this.getFileName({
+        work,
+        pattern: options.novelPath,
+        ext: textBlob.type,
+      }),
+      conflictAction: 'uniquify',
     });
 
     const coverURL = new URL(work.workURL);
@@ -626,33 +656,37 @@ export default class PixivContent {
 
       const imageBlob = await this.util.fetch({
         url: originalCoverURL,
-        type: "blob",
+        type: 'blob',
         init: {
-          credentials: "include",
-          referrer: location.href
-        }
-      })
+          credentials: 'include',
+          referrer: location.href,
+        },
+      });
 
       await this.download({
         blob: imageBlob,
-        filename: await this.getFileName({ work, pattern: options.novelPath, ext: imageBlob.type }),
-        conflictAction: 'uniquify'
-      })
+        filename: await this.getFileName({
+          work,
+          pattern: options.novelPath,
+          ext: imageBlob.type,
+        }),
+        conflictAction: 'uniquify',
+      });
     }
   }
 
   async getPageDocumentByURL(url) {
     const illustPageText = await this.util.fetch({
       url: url,
-      type: "text",
+      type: 'text',
       init: {
-        credentials: "include",
+        credentials: 'include',
         referrer: location.href,
-      }
+      },
     });
 
     const domParser = new DOMParser();
-    return domParser.parseFromString(illustPageText, "text/html");
+    return domParser.parseFromString(illustPageText, 'text/html');
   }
 
   createDownloader(className) {
@@ -678,7 +712,7 @@ export default class PixivContent {
         blobUrl: URL.createObjectURL(options.blob),
         filename: options.filename,
         conflictAction: options.conflictAction,
-      }
-    })
+      },
+    });
   }
 }

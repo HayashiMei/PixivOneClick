@@ -1,4 +1,4 @@
-import DefaultOptions from './default-option'
+import DefaultOptions from './default-option';
 
 export default class Option {
   constructor() {

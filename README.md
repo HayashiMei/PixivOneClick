@@ -6,7 +6,7 @@
 
 ## Screenshot
 
-以下截图截自[荻pote](https://www.pixiv.net/member.php?id=2131660)和[小说每日排行榜](https://www.pixiv.net/novel/ranking.php?mode=daily)。
+以下截图截自[荻 pote](https://www.pixiv.net/member.php?id=2131660)和[小说每日排行榜](https://www.pixiv.net/novel/ranking.php?mode=daily)。
 
 ### Illust
 
@@ -33,10 +33,10 @@ $ npm run build
 
 ## Install
 
-在Chrome的 **扩展程序页面(chrome://extensions)** 通过 **加载已解压的扩展程序** 安装这个扩展。
+在 Chrome 的 **扩展程序页面(chrome://extensions)** 通过 **加载已解压的扩展程序** 安装这个扩展。
 
 ## Attention
 
-这个扩展只是在好奇心的驱使下做着玩的，参考了很多Chrome商店里现有的Pixiv扩展，功能非常简陋(・ω<) てへぺろ
+这个扩展只是在好奇心的驱使下做着玩的，参考了很多 Chrome 商店里现有的 Pixiv 扩展，功能非常简陋(・ω<) てへぺろ
 
 18.09.27：发现用户页面已经通过 React 完全改成 SPA，对此进行了更新，猜测其他页面也会陆陆续续地更新为 React

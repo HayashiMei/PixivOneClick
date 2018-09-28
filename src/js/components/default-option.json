@@ -1,9 +1,9 @@
 {
-    "singlePath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
-    "multiPath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
-    "ugoiraPath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
-    "ugoiraFormat": "zip",
-    "ugoiraQuality": "0.85",
-    "novelPath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
-    "novelCover": "1"
+  "singlePath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
+  "multiPath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
+  "ugoiraPath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
+  "ugoiraFormat": "zip",
+  "ugoiraQuality": "0.85",
+  "novelPath": "Pixiv/${userName}(${userId})/${workName}(${workId})",
+  "novelCover": "1"
 }

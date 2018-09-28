@@ -1,4 +1,4 @@
-import Option from '../components/pixiv-options'
+import Option from '../components/pixiv-options';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const option = new Option();
@@ -12,11 +12,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     optElement.addEventListener('change', e => {
       option.set({
-        [key]: e.currentTarget.value
+        [key]: e.currentTarget.value,
       });
     });
   }
-  
+
   updateCursor();
   initRange();
 
@@ -49,4 +49,4 @@ const initRange = () => {
       text.textContent = `${Math.ceil(curVal * 100)}%`;
     });
   }
-}
+};

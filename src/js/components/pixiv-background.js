@@ -1,4 +1,4 @@
-import Option from './pixiv-options'
+import Option from './pixiv-options';
 
 export default class PixivBackground {
   init() {
@@ -10,17 +10,19 @@ export default class PixivBackground {
 
   addListener() {
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-      this.download(message.data).then(data => {
-        sendResponse({
-          error: null,
-          data
+      this.download(message.data)
+        .then(data => {
+          sendResponse({
+            error: null,
+            data,
+          });
+        })
+        .catch(err => {
+          sendResponse({
+            error: err.message,
+            data: null,
+          });
         });
-      }).catch(err => {
-        sendResponse({
-          error: err.message,
-          data: null
-        });
-      });
 
       return true;
     });
@@ -31,7 +33,7 @@ export default class PixivBackground {
       url: options.blobUrl,
       filename: options.filename,
       conflictAction: options.conflictAction,
-      saveAs: false
+      saveAs: false,
     });
 
     return downloadId;
