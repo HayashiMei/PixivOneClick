@@ -9,7 +9,7 @@ gulp.task('default', ['sass', 'webpack']);
 
 gulp.task('sass', () => {
   return sass('src/scss/*.scss', {
-    style: 'expanded'
+    style: 'expanded',
   })
     .on('error', sass.logError)
     .pipe(gulp.dest('./dist/css'));
@@ -25,17 +25,13 @@ gulp.task('webpack', () => {
 
 gulp.task('sass:watch', () => {
   gulp.watch('src/scss/*.scss', ['sass']).on('change', event => {
-    console.log(
-      'File ' + event.path + ' was ' + event.type + ', running tasks...'
-    );
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   });
 });
 
 gulp.task('js:watch', () => {
   gulp.watch('src/js/*/*.js', ['webpack']).on('change', event => {
-    console.log(
-      'File ' + event.path + ' was ' + event.type + ', running tasks...'
-    );
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   });
 });
 

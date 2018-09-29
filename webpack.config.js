@@ -14,14 +14,14 @@ module.exports = {
               'env',
               {
                 targets: {
-                  chrome: 60
-                }
-              }
-            ]
-          ]
-        }
-      }
-    ]
+                  chrome: 60,
+                },
+              },
+            ],
+          ],
+        },
+      },
+    ],
   },
-  devtool: 'source-map'
+  devtool: 'source-map',
 };

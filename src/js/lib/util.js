@@ -1,16 +1,19 @@
 export default class Util {
   message(options) {
     return new Promise((resolve, reject) => {
-      chrome.runtime.sendMessage({
-        type: options.type,
-        data: options.data
-      }, response => {
-        if (response.error) {
-          reject(new Error(response.error));
-        }
+      chrome.runtime.sendMessage(
+        {
+          type: options.type,
+          data: options.data,
+        },
+        response => {
+          if (response.error) {
+            reject(new Error(response.error));
+          }
 
-        resolve(response.data);
-      });
+          resolve(response.data);
+        }
+      );
     });
   }
 
@@ -18,23 +21,23 @@ export default class Util {
     return fetch(options.url, options.init).then(response => {
       if (!response.ok) return false;
       switch (options.type) {
-        case "arraybuffer":
+        case 'arraybuffer':
           return response.arrayBuffer();
 
-        case "blob":
+        case 'blob':
           return response.blob();
 
-        case "formdata":
+        case 'formdata':
           return response.formData();
 
-        case "json":
+        case 'json':
           return response.json();
 
-        case "text":
+        case 'text':
           return response.text();
 
         default:
-          throw new Error("Invalid type");
+          throw new Error('Invalid type');
       }
     });
   }
@@ -43,13 +46,13 @@ export default class Util {
     const blobUrl = URL.createObjectURL(options.blob);
 
     return new Promise((resolve, reject) => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      const img = document.createElement("img");
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = document.createElement('img');
 
-      img.setAttribute("src", blobUrl);
+      img.setAttribute('src', blobUrl);
 
-      img.addEventListener("load", () => {
+      img.addEventListener('load', () => {
         URL.revokeObjectURL(blobUrl);
 
         canvas.width = img.width;
@@ -61,7 +64,7 @@ export default class Util {
         canvas.toBlob(blob => resolve(blob), options.type, options.quality);
       });
 
-      img.addEventListener("error", err => {
+      img.addEventListener('error', err => {
         URL.revokeObjectURL(blobUrl);
 
         reject(err);

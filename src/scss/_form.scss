@@ -29,7 +29,7 @@
   font-size: inherit;
   color: #1f2d3d;
   outline: 0;
-  transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .input:hover {
@@ -49,7 +49,7 @@
   font-size: inherit;
   color: #1f2d3d;
   outline: 0;
-  transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .select:hover {

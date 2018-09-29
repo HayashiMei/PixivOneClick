@@ -17,8 +17,7 @@
   @include flex-flow(row-reverse nowrap);
 
   .downloader {
-    background: url(chrome-extension://__MSG_@@extension_id__/image/download.svg)
-      transparent;
+    background: url(chrome-extension://__MSG_@@extension_id__/image/download.svg) transparent;
     background-size: 90%;
     background-position: center 2px;
     background-repeat: no-repeat;
