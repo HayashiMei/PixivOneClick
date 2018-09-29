@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 export default class WorkNew {
   constructor(work, page) {
     this.workElment = work;
@@ -21,14 +19,14 @@ export default class WorkNew {
   setType() {
     let type = '';
 
-    const ugoiraMark = $(this.workElment).find('svg[viewBox="0 0 24 24"]');
-    const multiMark = $(this.workElment).find('svg[viewBox="0 0 9 10"]');
+    const ugoiraMark = this.workElment.querySelector('svg[viewBox="0 0 24 24"]');
+    const multiMark = this.workElment.querySelector('svg[viewBox="0 0 9 10"]');
 
-    if (ugoiraMark.length) {
+    if (ugoiraMark) {
       type = 'ugoira';
-    } else if (multiMark.length) {
+    } else if (multiMark) {
       type = 'multi';
-      this.pageCount = multiMark[0].nextElementSibling.innerText;
+      this.pageCount = multiMark.nextElementSibling.innerText;
     } else if (~this.workElment.firstElementChild.href.indexOf('novel')) {
       type = 'novel';
     } else {
@@ -62,11 +60,20 @@ export default class WorkNew {
   }
 
   getWorkInfoFromImageItem() {
-    const like = $(this.workElment).find('button');
-    this.btnLike = like[0];
-    this.btnGroup = like.parent().parent()[0];
+    this.btnLike = this.workElment.querySelector('button');
+    this.btnGroup = this.btnLike.parentElement.parentElement;
 
-    const a = $(this.workElment).find('a[class!="ext-menu"]')[1];
+    let a = null;
+    for (const element of [...this.workElment.querySelectorAll('a')]) {
+      if (!~element.className.indexOf('ext-menu')) {
+        a = element;
+      }
+    }
+
+    if (!a) {
+      return;
+    }
+
     this.workURL = a.href;
     this.workName = a.innerText;
 
@@ -114,7 +121,7 @@ export default class WorkNew {
   }
 
   getUserInfoFromBookmarkPage() {
-    const a = $(this.workElment).find('a');
+    const a = this.workElment.querySelector('a');
 
     const userInfo = a[a.length - 1];
     this.userName = userInfo.innerText;

@@ -1,4 +1,6 @@
-import Option from '../components/pixiv-options';
+import "regenerator-runtime/runtime";
+import Option from './components/pixiv-options';
+import '../sass/options.scss';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const option = new Option();

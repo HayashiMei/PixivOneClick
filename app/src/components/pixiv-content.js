@@ -1,9 +1,8 @@
-import $ from 'jquery';
+import JSZip from 'jszip';
 import Util from '../lib/util';
 import Option from './pixiv-options';
 import Work from './pixiv-work';
 import WorkNew from './pixiv-work-new';
-import JSZip from 'jszip';
 import Webp from '../lib/webp';
 import Apng from '../lib/apng';
 
@@ -165,7 +164,7 @@ export default class PixivContent {
 
   addDownloader2UserImageItem() {
     document.querySelectorAll('li button > svg[viewBox="0 0 32 32"]').forEach(item => {
-      const image = $(item).parents('li')[0].firstChild;
+      const image = item.parentElement.parentElement.parentElement.parentElement;
 
       if (image.querySelector('.ext-menu')) {
         return;
