@@ -27,7 +27,7 @@ export default class WorkNew {
     } else if (multiMark) {
       type = 'multi';
       this.pageCount = multiMark.nextElementSibling.innerText;
-    } else if (~this.workElment.firstElementChild.href.indexOf('novel')) {
+    } else if (~this.workElment.querySelector('a').href.indexOf('novel')) {
       type = 'novel';
     } else {
       type = 'illust';
@@ -63,12 +63,7 @@ export default class WorkNew {
     this.btnLike = this.workElment.querySelector('button');
     this.btnGroup = this.btnLike.parentElement.parentElement;
 
-    let a = null;
-    for (const element of [...this.workElment.querySelectorAll('a')]) {
-      if (!~element.className.indexOf('ext-menu')) {
-        a = element;
-      }
-    }
+    let a = this.workElment.nextElementSibling;
 
     if (!a) {
       return;

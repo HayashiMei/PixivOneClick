@@ -164,7 +164,7 @@ export default class PixivContent {
 
   addDownloader2UserImageItem() {
     document.querySelectorAll('li button > svg[viewBox="0 0 32 32"]').forEach(item => {
-      const image = item.parentElement.parentElement.parentElement.parentElement;
+      const image = item.parentElement.parentElement.parentElement.parentElement.parentElement;
 
       if (image.querySelector('.ext-menu')) {
         return;
