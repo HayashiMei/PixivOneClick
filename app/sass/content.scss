@@ -31,6 +31,18 @@
     position: relative;
     bottom: unset;
 
+    &.is-recommend {
+      position: absolute;
+      bottom: 3px;
+      right: 32px;
+    }
+
+    &.is-novel {
+      position: absolute;
+      right: 3px;
+      bottom: 36px;
+    }
+
     .downloader {
       width: 26px;
       height: 26px;

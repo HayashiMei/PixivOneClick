@@ -1,5 +1,5 @@
 export default class WorkNew {
-  constructor(work, page) {
+  constructor(work, page, isRecommend) {
     this.workElment = work;
     this.page = page;
     this.type = '';
@@ -8,6 +8,7 @@ export default class WorkNew {
     this.workId = '';
     this.workName = '';
     this.workURL = '';
+    this.isRecommend = isRecommend;
   }
 
   init() {
@@ -36,23 +37,27 @@ export default class WorkNew {
     this.type = type;
   }
 
+  isNovel() {
+    return this.type === 'novel';
+  }
+
   setWorkInfo() {
     switch (this.page) {
+      case 'user_home':
+        return this.isNovel() ? this.getWorkInfoFromNovelItem() : this.getWorkInfoFromImageItem();
+
       case 'user_novel':
       case 'ranking_novel':
       case 'bookmark_novel':
       case 'new_novel':
-        this.getWorkInfoFromNovelItem();
-        break;
+        return this.getWorkInfoFromNovelItem();
 
       case 'home':
-      case 'user_home':
       case 'user_illust':
       case 'ranking_illust':
       case 'bookmark_illust':
       case 'new_illust':
-        this.getWorkInfoFromImageItem();
-        break;
+        return this.getWorkInfoFromImageItem();
 
       default:
         break;
@@ -63,7 +68,12 @@ export default class WorkNew {
     this.btnLike = this.workElment.querySelector('button');
     this.btnGroup = this.btnLike.parentElement.parentElement;
 
-    let a = this.workElment.nextElementSibling;
+    let a = null;
+    if (this.isRecommend) {
+      a = this.workElment.querySelector('a:last-child');
+    } else {
+      a = this.workElment.nextElementSibling;
+    }
 
     if (!a) {
       return;
@@ -77,30 +87,34 @@ export default class WorkNew {
   }
 
   getWorkInfoFromNovelItem() {
-    const titleElement = this.workElment.querySelector('.title a');
-    this.workName = titleElement.textContent;
+    this.btnLike = this.workElment.querySelector('button');
+    this.btnGroup = this.btnLike.parentElement.parentElement;
 
-    this.workURL = titleElement.href;
+    const titleElements = this.workElment.querySelectorAll('a[title]');
+
+    if (titleElements.length === 2) {
+      this.seriesName = titleElements[0].textContent;
+      this.seriesURL = titleElements[0].href;
+      this.seriesId = this.seriesURL.split('/').reverse()[0];
+
+      this.workName = titleElements[1].textContent;
+      this.workURL = titleElements[1].href;
+    } else {
+      this.workName = titleElements[0].textContent;
+      this.workURL = titleElements[0].href;
+    }
 
     const urlObject = new URL(this.workURL);
     this.workId = urlObject.searchParams.get('id');
   }
 
-  getWorkInfoFromRankDetail() {
-    const titleElement = this.workElment.querySelector('[class^=gtm-ranking]');
-    this.workName = titleElement.textContent;
-
-    this.workURL = titleElement.href;
-
-    const urlObject = new URL(this.workURL);
-    this.workId = urlObject.searchParams.get('illust_id');
-  }
-
   setUserInfo() {
     switch (this.page) {
       case 'bookmark_illust':
-        this.getUserInfoFromBookmarkPage();
-        break;
+        return this.getUserInfoFromIllustBookmarkPage();
+
+      case 'bookmark_novel':
+        return this.getUserInfoFromNovelBookmarkPage();
 
       default:
         this.getUserInfo();
@@ -115,10 +129,20 @@ export default class WorkNew {
     this.userId = urlObject.searchParams.get('id');
   }
 
-  getUserInfoFromBookmarkPage() {
-    const a = this.workElment.querySelector('a');
+  getUserInfoFromIllustBookmarkPage() {
+    const a = this.workElment.parentElement.querySelectorAll('a');
 
     const userInfo = a[a.length - 1];
+    this.userName = userInfo.innerText;
+
+    const urlObject = new URL(userInfo.href);
+    this.userId = urlObject.searchParams.get('id');
+  }
+
+  getUserInfoFromNovelBookmarkPage() {
+    const a = this.workElment.parentElement.querySelectorAll('a');
+
+    const userInfo = a[3];
     this.userName = userInfo.innerText;
 
     const urlObject = new URL(userInfo.href);

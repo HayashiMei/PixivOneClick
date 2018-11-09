@@ -57,10 +57,12 @@ export default class PixivContent {
       case '/series.php':
       case '/novel/member.php':
         page = 'user_novel';
+        spa = true;
         break;
 
       case '/novel/bookmark.php':
         page = 'bookmark_novel';
+        spa = true;
         break;
 
       case '/novel/new.php':
@@ -113,8 +115,11 @@ export default class PixivContent {
         break;
 
       case 'user_novel':
-      case 'ranking_novel':
       case 'bookmark_novel':
+        this.addDownloader2UserImageItem();
+        break;
+
+      case 'ranking_novel':
       case 'new_novel':
         this.addDownloader2NovelItem();
         break;
@@ -165,16 +170,18 @@ export default class PixivContent {
   addDownloader2UserImageItem() {
     document.querySelectorAll('li button > svg[viewBox="0 0 32 32"]').forEach(item => {
       const image = item.parentElement.parentElement.parentElement.parentElement.parentElement;
+      const isRecommend = image.getAttribute('size') === '442';
 
       if (image.querySelector('.ext-menu')) {
         return;
       }
 
-      const work = new WorkNew(image, this.page);
+      const work = new WorkNew(image, this.page, isRecommend);
       work.init();
       this.worksMap[work.workId] = work;
 
-      const downloader = this.createDownloader('new');
+      const classNames = this.getDownloaderClassNames(work);
+      const downloader = this.createDownloader(classNames);
       work.btnGroup.insertBefore(downloader, work.btnGroup.firstChild);
 
       const listener = async e => {
@@ -267,6 +274,21 @@ export default class PixivContent {
     });
   }
 
+  getDownloaderClassNames(work) {
+    const classNames = ['new'];
+
+    if (work.isRecommend) {
+      classNames.push('is-recommend');
+    }
+
+    if (work.isNovel()) {
+      classNames.push('is-novel');
+      work.btnGroup.style.position = 'relative';
+    }
+
+    return classNames;
+  }
+
   getExt(options) {
     let ext = '';
 
@@ -310,6 +332,8 @@ export default class PixivContent {
       info: {
         userId: work.userId,
         userName,
+        seriesId: work.seriesId,
+        seriesName: work.seriesName,
         workId: work.workId,
         workName,
       },
@@ -534,6 +558,8 @@ export default class PixivContent {
 
     const convertedImageBlobs = [];
 
+    const options = await this.option.get();
+
     for (let i = 0; i < ugoiraData.frames.length; i++) {
       const frame = ugoiraData.frames[i];
 
@@ -541,8 +567,6 @@ export default class PixivContent {
       const imageBlob = new Blob([imageArrayBuffer], {
         type: ugoiraData.mime_type,
       });
-
-      const options = await this.option.get();
 
       const convertedImageBlob = await this.util.convert({
         blob: imageBlob,
@@ -587,6 +611,8 @@ export default class PixivContent {
 
     const convertedImageBlobs = [];
 
+    const options = await this.option.get();
+
     for (let i = 0; i < ugoiraData.frames.length; i++) {
       const frame = ugoiraData.frames[i];
 
@@ -594,8 +620,6 @@ export default class PixivContent {
       const imageBlob = new Blob([imageArrayBuffer], {
         type: ugoiraData.mime_type,
       });
-
-      const options = await this.option.get();
 
       const convertedImageBlob = await this.util.convert({
         blob: imageBlob,
@@ -636,12 +660,13 @@ export default class PixivContent {
     const textBlob = new Blob([novelTextElement.textContent.replace(/\r\n|\r|\n/g, '\r\n')], { type: 'text/plain' });
 
     const options = await this.option.get();
+    const pattern = work.seriesName && work.seriesId ? options.seriesNovelPath : options.novelPath;
 
     await this.download({
       blob: textBlob,
       filename: await this.getFileName({
         work,
-        pattern: options.novelPath,
+        pattern,
         ext: textBlob.type,
       }),
       conflictAction: 'uniquify',
@@ -667,7 +692,7 @@ export default class PixivContent {
         blob: imageBlob,
         filename: await this.getFileName({
           work,
-          pattern: options.novelPath,
+          pattern,
           ext: imageBlob.type,
         }),
         conflictAction: 'uniquify',
@@ -689,7 +714,7 @@ export default class PixivContent {
     return domParser.parseFromString(illustPageText, 'text/html');
   }
 
-  createDownloader(className) {
+  createDownloader(classNames = []) {
     const icon = document.createElement('div');
     icon.classList.add('downloader');
 
@@ -700,7 +725,7 @@ export default class PixivContent {
     const downloader = document.createElement('a');
     downloader.appendChild(div);
     downloader.classList.add('ext-menu');
-    downloader.classList.add(className);
+    downloader.classList.add(...classNames);
 
     return downloader;
   }
