@@ -301,8 +301,9 @@ export default class PixivContent {
   async getFileName(options) {
     const { work } = options;
 
-    const workName = await this.getWorkName(work);
-    const userName = work.userName.replace(/[\/\\\:\：\*\?\"\<\>\|]/, '_');
+    const illegal = /[\/\\\:\：\*\?\"\<\>\|]/g;
+    const workName = (await this.getWorkName(work)).replace(illegal, '_');
+    const userName = work.userName.replace(illegal, '_');
 
     const path = this.getPath({
       pattern: options.pattern,
