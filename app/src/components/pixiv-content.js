@@ -170,7 +170,7 @@ export default class PixivContent {
   addDownloader2UserImageItem() {
     document.querySelectorAll('li button > svg[viewBox="0 0 32 32"]').forEach(item => {
       const image = item.parentElement.parentElement.parentElement.parentElement.parentElement;
-      const isRecommend = image.getAttribute('size') === '442';
+      const isRecommend = !!image.querySelector('div[width]');
 
       if (image.querySelector('.ext-menu')) {
         return;
