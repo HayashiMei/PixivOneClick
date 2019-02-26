@@ -1,30 +1,19 @@
-@import '_mixin.scss';
-
 .ext-menu {
   position: absolute;
   bottom: 4px;
   z-index: 2;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: box;
   display: flex;
-
-  @include box-direction(reverse);
-  @include box-orient(horizontal);
-  @include box-line(single);
-  @include flex-flow(row-reverse nowrap);
+  flex-flow: row-reverse nowrap;
 
   .downloader {
+    width: 20px;
+    height: 20px;
     background: url(chrome-extension://__MSG_@@extension_id__/image/download.svg) transparent;
     background-size: 90%;
     background-position: center 2px;
     background-repeat: no-repeat;
-    width: 20px;
-    height: 20px;
-    @include opacity;
-    @include transition(opacity 0.2s ease-in-out);
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in-out;
   }
 
   &.new {

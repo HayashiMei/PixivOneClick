@@ -1,14 +1,14 @@
-@import '_reset.scss';
-@import '_mixin.scss';
-@import '_form.scss';
+@import 'reset.scss';
+@import 'form.scss';
+
 body {
   background: url(chrome-extension://__MSG_@@extension_id__/image/background.jpg) repeat;
 }
 
 #app {
-  background: #fff;
-  @include border-radius(4px);
   border: 1px solid #eee;
+  border-radius: 4px;
+  background: #fff;
 }
 
 .navigation {
@@ -28,58 +28,58 @@ body {
   cursor: pointer;
 }
 
-.navigation-cursor,
-.navigation-cursor:after {
+.navigation-cursor {
   position: absolute;
   bottom: 0;
+  left: 0;
   height: 0;
   width: 0;
-}
-
-.navigation-cursor {
-  left: 0;
   border-bottom: 1px solid #00a1d6;
   transform: translateX(0);
   transition: width 0.2s ease, transform 0.2s ease;
-}
 
-.navigation-cursor:after {
-  content: '';
-  left: 50%;
-  transform: translateX(-50%);
-  border: 3px solid #00a1d6;
-  border-top: 0;
-  border-left-color: transparent;
-  border-right-color: transparent;
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    height: 0;
+    width: 0;
+    transform: translateX(-50%);
+    border: 3px solid #00a1d6;
+    border-top: 0;
+    border-left-color: transparent;
+    border-right-color: transparent;
+  }
 }
 
 .content {
   display: flex;
-  padding: 30px 0;
   flex-direction: column;
+  padding: 30px 0;
   align-items: center;
 }
 
 .section {
+  position: relative;
   width: 65%;
   border-bottom: 1px solid #eee;
   margin-bottom: 17px;
-  position: relative;
   color: #6d757a;
 }
 
 .section-title {
-  padding: 0 0 15px;
   position: relative;
+  padding: 0 0 15px;
 }
 
 .section-title__icon {
   float: left;
   width: 4px;
   height: 23px;
+  border-radius: 4px;
   margin-top: 6px;
   background-color: #00a1d6;
-  border-radius: 4px;
 }
 
 .section-title__text {

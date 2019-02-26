@@ -1,4 +1,4 @@
-import "regenerator-runtime/runtime";
+import 'regenerator-runtime/runtime';
 import Option from './components/pixiv-options';
 import '../sass/options.scss';
 

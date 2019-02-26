@@ -30,15 +30,15 @@
   color: #1f2d3d;
   outline: 0;
   transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
 
-.input:hover {
-  border-color: #8391a5;
-}
+  &:hover {
+    border-color: #8391a5;
+  }
 
-.input:focus {
-  outline: 0;
-  border-color: #20a0ff;
+  &:focus {
+    outline: 0;
+    border-color: #20a0ff;
+  }
 }
 
 .select {
@@ -50,14 +50,14 @@
   color: #1f2d3d;
   outline: 0;
   transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
 
-.select:hover {
-  border-color: #8391a5;
-}
+  &:hover {
+    border-color: #8391a5;
+  }
 
-.select:focus {
-  border-color: #20a0ff;
+  &:focus {
+    border-color: #20a0ff;
+  }
 }
 
 .range__inner {
