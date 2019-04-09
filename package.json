@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
-    "autoprefixer": "^9.5.0",
+    "autoprefixer": "^9.5.1",
     "postcss-loader": "^3.0.0"
   }
 }
