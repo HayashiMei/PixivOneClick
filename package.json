@@ -1,6 +1,6 @@
 {
   "name": "pixiv-one-click",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Just a simple extension for Pixiv.",
   "author": "HayashiMei <hayashi@kato-megumi.com> (https://blog.romachuu.com)",
   "keywords": [
@@ -16,13 +16,16 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
+    "autoprefixer": "^9.5.1",
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^2.0.1",
+    "copy-webpack-plugin": "^5.0.2",
     "css-loader": "^2.1.1",
     "jszip": "^3.2.1",
     "mini-css-extract-plugin": "^0.6.0",
     "node-sass": "^4.11.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "uglifyjs-webpack-plugin": "^2.1.2",
     "webpack": "^4.29.6",
@@ -30,8 +33,6 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.3",
-    "autoprefixer": "^9.5.1",
-    "postcss-loader": "^3.0.0"
+    "@babel/polyfill": "^7.4.3"
   }
 }

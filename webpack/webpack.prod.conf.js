@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const baseWebpackConfig = require('./webpack.base.conf');
 
 module.exports = merge(baseWebpackConfig, {
@@ -12,10 +13,10 @@ module.exports = merge(baseWebpackConfig, {
   },
   mode: 'production',
   plugins: [
-    new CleanWebpackPlugin(['css', 'js'], {
-      root: path.resolve(__dirname, '../dist/'),
+    new CleanWebpackPlugin({
       verbose: true,
     }),
+    new CopyWebpackPlugin([{ from: 'app/html', to: 'html' }, { from: 'app/image', to: 'image' }, { from: 'app/manifest.json', to: 'manifest.json' }]),
     new webpack.optimize.ModuleConcatenationPlugin(),
   ],
 });
