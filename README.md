@@ -1,5 +1,7 @@
 <h1 align="center">Pixiv One Click</h1>
 
+[![Build Status](https://travis-ci.org/HayashiMei/PixivOneClick.svg?branch=master)](https://travis-ci.org/HayashiMei/PixivOneClick)
+
 ## Introduction
 
 只是一个简单的谷歌扩展，在部分页面的插画、漫画、小说的缩略图上增加了下载按钮，点击后直接下载原图、小说文本。
