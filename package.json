@@ -13,6 +13,9 @@
     "build": "webpack --config webpack/webpack.prod.conf.js"
   },
   "license": "MIT",
+  "dependencies": {
+    "@babel/polyfill": "7.4.4"
+  },
   "devDependencies": {
     "@babel/core": "7.4.4",
     "@babel/preset-env": "7.4.4",
@@ -32,8 +35,5 @@
     "webpack-cli": "3.3.2",
     "webpack-merge": "4.2.1",
     "zip-webpack-plugin": "3.0.0"
-  },
-  "dependencies": {
-    "@babel/polyfill": "7.4.4"
   }
 }
