@@ -218,7 +218,9 @@ export default class Apng {
 
       chunks.push(chunk);
 
-      if (chunk.type === 'IEND') break;
+      if (chunk.type === 'IEND') {
+        break;
+      }
     }
 
     return chunks;
@@ -313,11 +315,7 @@ export default class Apng {
       }
 
       const binary = atob(canvas.toDataURL('image/png').split(',')[1]);
-      const buffer = new Uint8Array(
-        binary.split('').map(value => {
-          return value.charCodeAt(0);
-        })
-      );
+      const buffer = new Uint8Array(binary.split('').map(value => value.charCodeAt(0)));
 
       blob = new Blob([buffer], { type: 'image/png' });
     } else {

@@ -19,7 +19,9 @@ export default class Util {
 
   fetch(options) {
     return fetch(options.url, options.init).then(response => {
-      if (!response.ok) return false;
+      if (!response.ok) {
+        return false;
+      }
       switch (options.type) {
         case 'arraybuffer':
           return response.arrayBuffer();

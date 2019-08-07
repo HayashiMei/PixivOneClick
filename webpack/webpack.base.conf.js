@@ -3,16 +3,20 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-const entry = {
-  background: path.resolve(__dirname, '../app/src/background.js'),
-  content: path.resolve(__dirname, '../app/src/content.js'),
-  options: path.resolve(__dirname, '../app/src/options.js'),
-};
-
 module.exports = {
-  entry,
+  entry: {
+    background: path.resolve(__dirname, '../app/src/background.js'),
+    content: path.resolve(__dirname, '../app/src/content.js'),
+    options: path.resolve(__dirname, '../app/src/options.js'),
+  },
   module: {
     rules: [
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'eslint-loader',
+        exclude: /(node_modules)/,
+      },
       {
         test: /\.js$/,
         use: {
@@ -21,11 +25,16 @@ module.exports = {
             cacheDirectory: true,
           },
         },
-        exclude: /node_modules/,
+        exclude: /(node_modules)/,
       },
       {
         test: /\.(scss|sass)$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
     ],
   },

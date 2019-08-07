@@ -116,7 +116,7 @@ export default class Work {
   }
 
   getUserInfoFromRankDetail() {
-    let userInfo = this.workElment.querySelector('.ui-profile-popup');
+    const userInfo = this.workElment.querySelector('.ui-profile-popup');
 
     this.userName = userInfo.textContent;
     this.userId = userInfo.dataset['user_id'];

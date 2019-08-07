@@ -29,7 +29,9 @@ const updateCursor = () => {
   const cursor = document.querySelector('.navigation-cursor'),
     activedItem = document.querySelector('.navigation-item');
 
-  if (!cursor || !activedItem) return;
+  if (!cursor || !activedItem) {
+    return;
+  }
 
   cursor.style.cssText = `width: ${activedItem.offsetWidth}px; transform: translateX(${activedItem.offsetLeft}px);`;
 };
@@ -41,13 +43,17 @@ const initRange = () => {
     const inner = r.querySelector('.range__inner'),
       text = r.querySelector('.range__text');
 
-    if (!inner || !text) continue;
+    if (!inner || !text) {
+      continue;
+    }
 
     text.textContent = `${Math.ceil(inner.value * 100)}%`;
 
     inner.addEventListener('input', e => {
-      let curVal = e.currentTarget.value;
-      if (!text) return;
+      const curVal = e.currentTarget.value;
+      if (!text) {
+        return;
+      }
       text.textContent = `${Math.ceil(curVal * 100)}%`;
     });
   }

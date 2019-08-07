@@ -123,7 +123,7 @@ export default class WorkNew {
   }
 
   getUserInfo() {
-    this.userName = document.title.match(/「(.*)」/)[1];
+    this.userName = document.title.replace(' - pixiv', '');
 
     const urlObject = new URL(document.location);
     this.userId = urlObject.searchParams.get('id');

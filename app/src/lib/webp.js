@@ -296,11 +296,7 @@ export default class Webp {
       }
 
       const binary = atob(canvas.toDataURL('image/webp').split(',')[1]);
-      const buffer = new Uint8Array(
-        binary.split('').map(value => {
-          return value.charCodeAt(0);
-        })
-      );
+      const buffer = new Uint8Array(binary.split('').map(value => value.charCodeAt(0)));
 
       blob = new Blob([buffer], { type: 'image/webp' });
     } else {
@@ -331,7 +327,7 @@ export default class Webp {
       const riffChunks = this.readChunks(buffer);
 
       if (riffChunks.length !== 1 || riffChunks[0].id !== 'RIFF') {
-        throw new Error("Can't find RIFF chunk");
+        throw new Error('Can\'t find RIFF chunk');
       }
 
       const chunks = this.readChunks(riffChunks[0].data.subarray(4));
@@ -406,6 +402,16 @@ export default class Webp {
       }
     }
 
-    return new Blob([this.writeChunks([this.createRiffChunk({ type: 'WEBP', buffer: this.writeChunks(rebuiltChunks) })])], { type: 'image/webp' });
+    return new Blob(
+      [
+        this.writeChunks([
+          this.createRiffChunk({
+            type: 'WEBP',
+            buffer: this.writeChunks(rebuiltChunks),
+          }),
+        ]),
+      ],
+      { type: 'image/webp' }
+    );
   }
 }

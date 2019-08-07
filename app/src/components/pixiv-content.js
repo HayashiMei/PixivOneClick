@@ -132,7 +132,9 @@ export default class PixivContent {
   isLimited(item) {
     const img = item.querySelector('img');
 
-    if (!img) return true;
+    if (!img) {
+      return true;
+    }
 
     const imgURL = new URL(img.dataset['src']);
 
@@ -141,7 +143,7 @@ export default class PixivContent {
 
   addDownloader2ImageItem() {
     document.querySelectorAll('.image-item').forEach(item => {
-      var a = item.querySelector('.work');
+      const a = item.querySelector('.work');
       if (!a || a.href.indexOf('booth') !== -1 || this.isLimited(item)) {
         return false;
       }
@@ -200,10 +202,14 @@ export default class PixivContent {
 
   addDownloader2RankingIllust() {
     document.querySelectorAll('.ranking-item').forEach(item => {
-      if (this.isLimited(item)) return false;
+      if (this.isLimited(item)) {
+        return false;
+      }
 
-      var a = item.querySelector('.work');
-      if (!a) return false;
+      const a = item.querySelector('.work');
+      if (!a) {
+        return false;
+      }
 
       const downloader = this.createDownloader();
       a.appendChild(downloader);
@@ -251,7 +257,7 @@ export default class PixivContent {
 
   addDownloader2RankingDetail() {
     document.querySelectorAll('.rank-detail').forEach(item => {
-      var a = item.querySelector('._work');
+      const a = item.querySelector('._work');
 
       const downloader = this.createDownloader();
       a.appendChild(downloader);
@@ -323,7 +329,7 @@ export default class PixivContent {
   async getFileName(options) {
     const { work } = options;
 
-    const illegal = /[\/\\\:\：\*\?\"\<\>\|]/g;
+    const illegal = /[\\/:*?"<>|]/g;
     const workName = (await this.getWorkName(work)).replace(illegal, '_');
     const userName = work.userName.replace(illegal, '_');
 
@@ -347,12 +353,12 @@ export default class PixivContent {
       case 'novel':
         fileName = `${path}.${this.getExt(options)}`;
         break;
-
       case 'multi':
-        const index = String(options.index).padStart(3, '0');
-        fileName = `${path}/${index}.${this.getExt(options)}`;
+        {
+          const index = String(options.index).padStart(3, '0');
+          fileName = `${path}/${index}.${this.getExt(options)}`;
+        }
         break;
-
       default:
         break;
     }
@@ -372,9 +378,9 @@ export default class PixivContent {
     if (/\.{3}$/.test(work.workName)) {
       const workPageDocument = await this.getPageDocumentByURL(work.workURL);
       const matchedResult = workPageDocument.title.match(new RegExp('「(.*)」/'));
-      work.workName = matchedResult[1];
+      return matchedResult[1];
     }
-    return work.workName.replace(/[\/\\\:\：\*\?\"\<\>\|]/, '_');
+    return work.workName;
   }
 
   async downloadWork(work) {
@@ -408,11 +414,15 @@ export default class PixivContent {
     for (const script of illustPageDocument.querySelectorAll('script')) {
       const matchedResult = script.textContent.match(new RegExp('"urls"[ //t]*:[ //t]*(.*?),"tags"'));
 
-      if (!matchedResult) continue;
+      if (!matchedResult) {
+        continue;
+      }
 
       const urls = JSON.parse(matchedResult[1]);
 
-      if (!urls['original']) return;
+      if (!urls['original']) {
+        return;
+      }
 
       originalIllustURL = urls['original'];
 
@@ -501,9 +511,14 @@ export default class PixivContent {
       init: { credentials: 'include', referrer: location.href },
     });
 
-    if (!ugoiraData && !ugoiraData.body) return;
+    if (!ugoiraData && !ugoiraData.body) {
+      return;
+    }
 
-    work.ugoiraData = ugoiraData.body;
+    work = {
+      ...work,
+      ugoiraData: ugoiraData.body,
+    };
 
     const options = await this.option.get();
 
@@ -655,7 +670,9 @@ export default class PixivContent {
     const novelPageDocument = await this.getPageDocumentByURL(work.workURL);
     const novelTextElement = novelPageDocument.querySelector('#novel_text');
 
-    if (!novelTextElement) return false;
+    if (!novelTextElement) {
+      return false;
+    }
 
     const textBlob = new Blob([novelTextElement.textContent.replace(/\r\n|\r|\n/g, '\r\n')], { type: 'text/plain' });
 

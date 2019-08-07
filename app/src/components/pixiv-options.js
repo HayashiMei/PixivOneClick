@@ -6,9 +6,7 @@ export default class Option {
   }
 
   init(options = DefaultOptions) {
-    return this.get(Object.keys(options)).then(oldOptions => {
-      return this.set(Object.assign(options, oldOptions));
-    });
+    return this.get(Object.keys(options)).then(oldOptions => this.set(Object.assign(options, oldOptions)));
   }
 
   get(keys = this.keys) {
