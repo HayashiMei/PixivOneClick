@@ -1,5 +1,7 @@
 <h1 align="center">Pixiv One Click</h1>
 
+[![Build Status](https://travis-ci.org/HayashiMei/PixivOneClick.svg?branch=master)](https://travis-ci.org/HayashiMei/PixivOneClick)
+
 ## Introduction
 
 只是一个简单的谷歌扩展，在部分页面的插画、漫画、小说的缩略图上增加了下载按钮，点击后直接下载原图、小说文本。
@@ -37,6 +39,4 @@ $ npm run build
 
 ## Attention
 
-这个扩展只是在好奇心的驱使下做着玩的，参考了很多 Chrome 商店里现有的 Pixiv 扩展，功能非常简陋(・ω<) てへぺろ
-
-18.09.27：发现用户页面已经通过 React 完全改成 SPA，对此进行了更新，猜测其他页面也会陆陆续续地更新为 React
+只是在好奇心的驱使下做着玩的，参考了很多现有的 Pixiv 扩展，没啥用(・ω<) てへぺろ

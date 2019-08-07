@@ -3,7 +3,9 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const ZipPlugin = require('zip-webpack-plugin');
 const baseWebpackConfig = require('./webpack.base.conf');
+const packageJson = require('../package.json');
 
 module.exports = merge(baseWebpackConfig, {
   output: {
@@ -23,5 +25,9 @@ module.exports = merge(baseWebpackConfig, {
       { from: 'app/manifest.json', to: 'manifest.json' },
     ]),
     new webpack.optimize.ModuleConcatenationPlugin(),
+    new ZipPlugin({
+      filename: `PixivOneClick-${packageJson.version}.zip`,
+      pathPrefix: 'dist',
+    }),
   ],
 });

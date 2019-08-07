@@ -1,0 +1,19 @@
+language: node_js
+
+node_js: stable
+
+install:
+  - npm i
+  - npm audit fix
+
+script:
+  - npm run build
+
+deploy:
+  provider: releases
+  api_key:
+    secure: ${GH_TOKEN}
+  file: dist/*.zip
+  skip_cleanup: true
+  on:
+    tags: true

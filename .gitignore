@@ -7,3 +7,5 @@ dist
 *.zip
 
 yarn-error.log
+
+/dist
