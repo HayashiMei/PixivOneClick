@@ -27,7 +27,6 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.optimize.ModuleConcatenationPlugin(),
     new ZipPlugin({
       filename: `PixivOneClick-${packageJson.version}.zip`,
-      pathPrefix: 'dist',
     }),
   ],
 });
