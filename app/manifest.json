@@ -1,6 +1,6 @@
 {
   "name": "Pixiv One Click",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "manifest_version": 2,
   "description": "Just a simple extension.",
   "permissions": [

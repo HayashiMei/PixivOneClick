@@ -408,26 +408,7 @@ export default class PixivContent {
   }
 
   async downloadIllust(work) {
-    const illustPageDocument = await this.getPageDocumentByURL(work.workURL);
-
-    let originalIllustURL = '';
-    for (const script of illustPageDocument.querySelectorAll('script')) {
-      const matchedResult = script.textContent.match(new RegExp('"urls"[ //t]*:[ //t]*(.*?),"tags"'));
-
-      if (!matchedResult) {
-        continue;
-      }
-
-      const urls = JSON.parse(matchedResult[1]);
-
-      if (!urls['original']) {
-        return;
-      }
-
-      originalIllustURL = urls['original'];
-
-      break;
-    }
+    const originalIllustURL = work.workElment.querySelector('img').src.replace(/c\/.*\/img-master/, 'img-original').replace(/_p0_.*\./, '_p0.');
 
     const imageBlob = await this.util.fetch({
       url: originalIllustURL,
@@ -465,15 +446,12 @@ export default class PixivContent {
       return;
     }
 
-    const multiIllustPageURL = work.workURL.replace('medium', 'manga_big');
+    const multiIllustPageURL = work.workElment.querySelector('img').src.replace(/c\/.*\/img-master/, 'img-original').replace(/_p0_.*\./, '_p0.');
 
     const imageURLs = [];
 
     for (let i = 0; i < pageCount; i++) {
-      const illustPageDocument = await this.getPageDocumentByURL(`${multiIllustPageURL}&page=${i}`);
-      const imageURL = illustPageDocument.querySelector('img').src;
-
-      imageURLs.push(imageURL);
+      imageURLs.push(multiIllustPageURL.replace('p0', `p${i}`));
     }
 
     const imageBlobs = [];

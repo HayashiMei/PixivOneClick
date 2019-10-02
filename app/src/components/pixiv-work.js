@@ -62,11 +62,8 @@ export default class Work {
   getWorkInfoFromImageItem() {
     const titleElement = this.workElment.querySelector('.title');
     this.workName = titleElement.textContent;
-
     this.workURL = titleElement.parentElement.href || titleElement.href;
-
-    const urlObject = new URL(this.workURL);
-    this.workId = urlObject.searchParams.get('illust_id') || urlObject.searchParams.get('id');
+    this.workId = this.workURL.split('/').reverse()[0];
   }
 
   getWorkInfoFromNovelItem() {

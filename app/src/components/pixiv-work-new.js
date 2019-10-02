@@ -81,9 +81,7 @@ export default class WorkNew {
 
     this.workURL = a.href;
     this.workName = a.innerText;
-
-    const urlObject = new URL(this.workURL);
-    this.workId = urlObject.searchParams.get('illust_id');
+    this.workId = this.workURL.split('/').reverse()[0];
   }
 
   getWorkInfoFromNovelItem() {
