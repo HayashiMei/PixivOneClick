@@ -17,7 +17,7 @@
     "core-js": "3.5.0"
   },
   "devDependencies": {
-    "@babel/core": "7.7.5",
+    "@babel/core": "7.7.7",
     "@babel/preset-env": "7.7.6",
     "autoprefixer": "9.7.3",
     "babel-eslint": "10.0.3",
