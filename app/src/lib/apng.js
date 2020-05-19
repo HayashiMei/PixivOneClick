@@ -88,7 +88,9 @@ class Reader {
       return '';
     }
 
-    const value = String.fromCharCode(...this.buffer.subarray(this.position >> 3, (this.position >> 3) + length));
+    const value = String.fromCharCode(
+      ...this.buffer.subarray(this.position >> 3, (this.position >> 3) + length)
+    );
 
     this.position += length << 3;
 
@@ -114,7 +116,9 @@ class Writer {
         const index = this.position >> 3;
         const shift = this.position & 0x07;
 
-        this.buffer[index] = (this.buffer[index] & ~(1 << shift)) | (((value >> i) & 0x01) << shift);
+        this.buffer[index] =
+          (this.buffer[index] & ~(1 << shift)) |
+          (((value >> i) & 0x01) << shift);
 
         this.position++;
       }
@@ -123,7 +127,9 @@ class Writer {
         const index = this.position >> 3;
         const shift = (this.position & 0x07) ^ 0x07;
 
-        this.buffer[index] = (this.buffer[index] & ~(1 << shift)) | (((value >> i) & 0x01) << shift);
+        this.buffer[index] =
+          (this.buffer[index] & ~(1 << shift)) |
+          (((value >> i) & 0x01) << shift);
 
         this.position++;
       }
@@ -212,7 +218,10 @@ export default class Apng {
 
       const crc32End = reader.position >> 3;
 
-      if (reader.readBits(32) !== Crc32.calc(buffer.subarray(crc32Start, crc32End))) {
+      if (
+        reader.readBits(32) !==
+        Crc32.calc(buffer.subarray(crc32Start, crc32End))
+      ) {
         throw new Error('Incorrect CRC32');
       }
 
@@ -227,7 +236,9 @@ export default class Apng {
   }
 
   writeChunks(chunks) {
-    const buffer = new Uint8Array(chunks.reduce((prev, chunk) => prev + 4 + 4 + chunk.data.length + 4, 0));
+    const buffer = new Uint8Array(
+      chunks.reduce((prev, chunk) => prev + 4 + 4 + chunk.data.length + 4, 0)
+    );
     const writer = new Writer(buffer, 0, false);
 
     for (const chunk of chunks) {
@@ -297,7 +308,10 @@ export default class Apng {
 
     if (image instanceof Blob) {
       blob = image;
-    } else if (image instanceof HTMLImageElement || image instanceof HTMLCanvasElement) {
+    } else if (
+      image instanceof HTMLImageElement ||
+      image instanceof HTMLCanvasElement
+    ) {
       let canvas;
 
       if (image instanceof HTMLImageElement) {
@@ -315,7 +329,9 @@ export default class Apng {
       }
 
       const binary = atob(canvas.toDataURL('image/png').split(',')[1]);
-      const buffer = new Uint8Array(binary.split('').map(value => value.charCodeAt(0)));
+      const buffer = new Uint8Array(
+        binary.split('').map(value => value.charCodeAt(0))
+      );
 
       blob = new Blob([buffer], { type: 'image/png' });
     } else {
@@ -411,6 +427,8 @@ export default class Apng {
       data: new Uint8Array(0),
     });
 
-    return new Blob([this.getSignature(), this.writeChunks(rebuiltChunks)], { type: 'image/png' });
+    return new Blob([this.getSignature(), this.writeChunks(rebuiltChunks)], {
+      type: 'image/png',
+    });
   }
 }

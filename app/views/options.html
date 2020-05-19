@@ -1,120 +1,125 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Pixiv One Click Options</title>
+    <link rel="stylesheet" href="../css/options.css" />
+  </head>
 
-<head>
-  <title>Pixiv One Click Options</title>
-  <link rel="stylesheet" href="../css/options.css">
-</head>
+  <body>
+    <div id="app">
+      <header>
+        <nav class="navigation">
+          <ul class="clearfix">
+            <li class="navigation-item">Options</li>
+          </ul>
+          <div class="navigation-cursor"></div>
+        </nav>
+      </header>
 
-<body>
-  <div id="app">
-    <header>
-      <nav class="navigation">
-        <ul class="clearfix">
-          <li class="navigation-item">Options</li>
-        </ul>
-        <div class="navigation-cursor"></div>
-      </nav>
-    </header>
-
-    <main class="content">
-      <section class="section">
-        <div class="section-title clearfix">
-          <span class="section-title__icon"></span>
-          <span class="section-title__text">Single illust</span>
-        </div>
-        <div class="form">
-          <div class="form-item">
-            <label class="form-item__label">Single illust path</label>
-            <div class="form-item__content">
-              <input class="input" type="text" id="singlePath" />
-            </div>
+      <main class="content">
+        <section class="section">
+          <div class="section-title clearfix">
+            <span class="section-title__icon"></span>
+            <span class="section-title__text">Single illust</span>
           </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-title clearfix">
-          <span class="section-title__icon"></span>
-          <span class="section-title__text">Multi illust</span>
-        </div>
-        <div class="form">
-          <div class="form-item">
-            <label class="form-item__label">Multiple illust path</label>
-            <div class="form-item__content">
-              <input class="input" type="text" id="multiPath" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-title clearfix">
-          <span class="section-title__icon"></span>
-          <span class="section-title__text">Ugoku illust</span>
-        </div>
-        <div class="form">
-          <div class="form-item">
-            <label class="form-item__label">Ugoku illust path</label>
-            <div class="form-item__content">
-              <input class="input" type="text" id="ugoiraPath" />
-            </div>
-          </div>
-          <div class="form-item">
-            <label class="form-item__label">Ugoira format</label>
-            <div class="form-item__content">
-              <select class="select" id="ugoiraFormat">
-                <option value="zip">ZIP</option>
-                <option value="apng">APNG</option>
-                <option value="webp">WEBP</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-item">
-            <label class="form-item__label">Quality</label>
-            <div class="form-item__content">
-              <div class="range">
-                <input class="range__inner" id="ugoiraQuality" type="range" min="0" max="1" step="0.01" />
-                <span class="range__text">1</span>
+          <div class="form">
+            <div class="form-item">
+              <label class="form-item__label">Single illust path</label>
+              <div class="form-item__content">
+                <input class="input" type="text" id="singlePath" />
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="section">
-        <div class="section-title clearfix">
-          <span class="section-title__icon"></span>
-          <span class="section-title__text">Novel</span>
-        </div>
-        <div class="form">
-          <div class="form-item">
-            <label class="form-item__label">Novel path</label>
-            <div class="form-item__content">
-              <input class="input" type="text" id="novelPath" />
+        <section class="section">
+          <div class="section-title clearfix">
+            <span class="section-title__icon"></span>
+            <span class="section-title__text">Multi illust</span>
+          </div>
+          <div class="form">
+            <div class="form-item">
+              <label class="form-item__label">Multiple illust path</label>
+              <div class="form-item__content">
+                <input class="input" type="text" id="multiPath" />
+              </div>
             </div>
           </div>
-          <div class="form-item">
-            <label class="form-item__label">Series Novel path</label>
-            <div class="form-item__content">
-              <input class="input" type="text" id="seriesNovelPath" />
+        </section>
+
+        <section class="section">
+          <div class="section-title clearfix">
+            <span class="section-title__icon"></span>
+            <span class="section-title__text">Ugoku illust</span>
+          </div>
+          <div class="form">
+            <div class="form-item">
+              <label class="form-item__label">Ugoku illust path</label>
+              <div class="form-item__content">
+                <input class="input" type="text" id="ugoiraPath" />
+              </div>
+            </div>
+            <div class="form-item">
+              <label class="form-item__label">Ugoira format</label>
+              <div class="form-item__content">
+                <select class="select" id="ugoiraFormat">
+                  <option value="zip">ZIP</option>
+                  <option value="apng">APNG</option>
+                  <option value="webp">WEBP</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-item">
+              <label class="form-item__label">Quality</label>
+              <div class="form-item__content">
+                <div class="range">
+                  <input
+                    class="range__inner"
+                    id="ugoiraQuality"
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                  />
+                  <span class="range__text">1</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-item">
-            <label class="form-item__label">Download novel cover</label>
-            <div class="form-item__content">
-              <select class="select" id="novelCover">
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-              </select>
+        </section>
+
+        <section class="section">
+          <div class="section-title clearfix">
+            <span class="section-title__icon"></span>
+            <span class="section-title__text">Novel</span>
+          </div>
+          <div class="form">
+            <div class="form-item">
+              <label class="form-item__label">Novel path</label>
+              <div class="form-item__content">
+                <input class="input" type="text" id="novelPath" />
+              </div>
+            </div>
+            <div class="form-item">
+              <label class="form-item__label">Series Novel path</label>
+              <div class="form-item__content">
+                <input class="input" type="text" id="seriesNovelPath" />
+              </div>
+            </div>
+            <div class="form-item">
+              <label class="form-item__label">Download novel cover</label>
+              <div class="form-item__content">
+                <select class="select" id="novelCover">
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+                </select>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
-  </div>
+        </section>
+      </main>
+    </div>
 
-  <script src="../js/options.js"></script>
-</body>
-
+    <script src="../js/options.js"></script>
+  </body>
 </html>

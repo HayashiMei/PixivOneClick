@@ -20,7 +20,9 @@ export default class WorkNew {
   setType() {
     let type = '';
 
-    const ugoiraMark = this.workElment.querySelector('svg[viewBox="0 0 24 24"]');
+    const ugoiraMark = this.workElment.querySelector(
+      'svg[viewBox="0 0 24 24"]'
+    );
     const multiMark = this.workElment.querySelector('svg[viewBox="0 0 9 10"]');
 
     if (ugoiraMark) {
@@ -44,7 +46,9 @@ export default class WorkNew {
   setWorkInfo() {
     switch (this.page) {
       case 'user_home':
-        return this.isNovel() ? this.getWorkInfoFromNovelItem() : this.getWorkInfoFromImageItem();
+        return this.isNovel()
+          ? this.getWorkInfoFromNovelItem()
+          : this.getWorkInfoFromImageItem();
 
       case 'user_novel':
       case 'ranking_novel':

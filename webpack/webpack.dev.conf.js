@@ -13,16 +13,15 @@ module.exports = merge(baseWebpackConfig, {
   },
   mode: 'development',
   devtool: 'source-map',
-  // watch: true,
   plugins: [
-    new CleanWebpackPlugin({
-      verbose: true,
+    new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: 'app/images', to: 'images' },
+        { from: 'app/views', to: 'views' },
+        { from: 'app/manifest.json', to: 'manifest.json' },
+       ],
     }),
-    new CopyPlugin([
-      { from: 'app/images', to: 'images' },
-      { from: 'app/views', to: 'views' },
-      { from: 'app/manifest.json', to: 'manifest.json' },
-    ]),
     new webpack.optimize.ModuleConcatenationPlugin(),
   ],
 });

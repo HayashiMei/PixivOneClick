@@ -64,7 +64,9 @@ class Reader {
       return '';
     }
 
-    const value = String.fromCharCode(...this.buffer.subarray(this.position >> 3, (this.position >> 3) + length));
+    const value = String.fromCharCode(
+      ...this.buffer.subarray(this.position >> 3, (this.position >> 3) + length)
+    );
 
     this.position += length << 3;
 
@@ -90,7 +92,9 @@ class Writer {
         const index = this.position >> 3;
         const shift = this.position & 0x07;
 
-        this.buffer[index] = (this.buffer[index] & ~(1 << shift)) | (((value >> i) & 0x01) << shift);
+        this.buffer[index] =
+          (this.buffer[index] & ~(1 << shift)) |
+          (((value >> i) & 0x01) << shift);
 
         this.position++;
       }
@@ -99,7 +103,9 @@ class Writer {
         const index = this.position >> 3;
         const shift = (this.position & 0x07) ^ 0x07;
 
-        this.buffer[index] = (this.buffer[index] & ~(1 << shift)) | (((value >> i) & 0x01) << shift);
+        this.buffer[index] =
+          (this.buffer[index] & ~(1 << shift)) |
+          (((value >> i) & 0x01) << shift);
 
         this.position++;
       }
@@ -190,7 +196,13 @@ export default class Webp {
   }
 
   writeChunks(chunks) {
-    const buffer = new Uint8Array(chunks.reduce((prev, chunk) => prev + 4 + 4 + chunk.data.length + (chunk.data.length % 2), 0));
+    const buffer = new Uint8Array(
+      chunks.reduce(
+        (prev, chunk) =>
+          prev + 4 + 4 + chunk.data.length + (chunk.data.length % 2),
+        0
+      )
+    );
     const writer = new Writer(buffer, 0, true);
 
     for (const chunk of chunks) {
@@ -278,7 +290,10 @@ export default class Webp {
 
     if (image instanceof Blob) {
       blob = image;
-    } else if (image instanceof HTMLImageElement || image instanceof HTMLCanvasElement) {
+    } else if (
+      image instanceof HTMLImageElement ||
+      image instanceof HTMLCanvasElement
+    ) {
       let canvas;
 
       if (image instanceof HTMLImageElement) {
@@ -296,7 +311,9 @@ export default class Webp {
       }
 
       const binary = atob(canvas.toDataURL('image/webp').split(',')[1]);
-      const buffer = new Uint8Array(binary.split('').map(value => value.charCodeAt(0)));
+      const buffer = new Uint8Array(
+        binary.split('').map(value => value.charCodeAt(0))
+      );
 
       blob = new Blob([buffer], { type: 'image/webp' });
     } else {

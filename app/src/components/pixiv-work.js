@@ -99,7 +99,9 @@ export default class Work {
   }
 
   getUserInfo() {
-    let userInfo = this.workElment.querySelector('.user') || this.workElment.querySelector('.user-container');
+    let userInfo =
+      this.workElment.querySelector('.user') ||
+      this.workElment.querySelector('.user-container');
     if (userInfo) {
       this.userName = userInfo.dataset['user_name'];
       this.userId = userInfo.dataset['user_id'];
