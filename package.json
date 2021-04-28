@@ -31,7 +31,7 @@
     "eslint-loader": "4.0.2",
     "eslint-plugin-prettier": "3.4.0",
     "jszip": "3.6.0",
-    "mini-css-extract-plugin": "1.4.0",
+    "mini-css-extract-plugin": "1.5.0",
     "node-sass": "5.0.0",
     "optimize-css-assets-webpack-plugin": "5.0.4",
     "postcss-loader": "3.0.0",
